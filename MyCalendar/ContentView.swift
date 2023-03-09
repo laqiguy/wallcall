@@ -77,7 +77,7 @@ struct ContentView: View {
                     HStack(alignment: .center, spacing: 4 * fontMultiplier) {
                         ForEach(month.days, id: \.self) { day in
                             Text(day)
-                                .font(.custom(fontFamily, size: 16 * fontMultiplier))
+                                .font(.custom(fontFamily, size: 14 * fontMultiplier))
                                 .foregroundColor(textColor)
                                 .shadow(color: shadowColor,
                                         radius: 5)
@@ -89,7 +89,7 @@ struct ContentView: View {
                             HStack(alignment: .center, spacing: 4 * fontMultiplier) {
                                 ForEach(week.values, id: \.self) { day in
                                     Text(day)
-                                        .font(.custom(fontFamily, size: 16 * fontMultiplier))
+                                        .font(.custom(fontFamily, size: 14 * fontMultiplier))
                                         .foregroundColor(textColor)
                                         .shadow(color: shadowColor,
                                                 radius: 5)
