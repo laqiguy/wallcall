@@ -13,7 +13,7 @@ struct ContentView: View {
     @State var current: Date = Date()
     
     var month: Month {
-        generate(current)
+        Month.generate(current)
     }
     
     var textColor: Color {
@@ -43,7 +43,7 @@ struct ContentView: View {
         default: return 1.0
         }
     }
-    var intProxy: Binding<Double>{
+    var fontScaleProxy: Binding<Double> {
         Binding<Double>(get: {
             return Double(fontScale)
         }, set: {
@@ -109,82 +109,63 @@ struct ContentView: View {
                 ImagePicker(image: self.$image)
             }
             .sheet(isPresented: $isShowFontPicker) {
-                VStack(spacing: 16) {
-                    Toggle(isOn: $isWhite) {
-                        Text("White color scheme")
-                    }
-                    Picker("Please choose a color", selection: $fontFamily) {
-                        ForEach(UIFont.familyNames, id: \.self) {
-                            Text($0)
-                        }
-                    }.pickerStyle(.wheel)
-                    Text("Размер шрифта")
-                    Slider(value: intProxy, in: 1...5) {
-                        Text("Размер шрифта")
-                    }
-                }
-                .padding()
-                .presentationDetents(Set(arrayLiteral: heights))
+                FontEditorView(fontFamily: $fontFamily, isWhite: $isWhite, fontValue: fontScaleProxy)
             }
             .sheet(isPresented: $isShowDatePicker) {
-                DatePicker("Дата",
-                           selection: $current,
-                           in: Date()...,
-                           displayedComponents: [.date])
-                .datePickerStyle(.wheel)
-                .presentationDetents(Set(arrayLiteral: heights))
+                DateEditorView(date: $current)
             }
             .statusBar(hidden: true)
         }
     }
 }
 
-struct ImagePicker: UIViewControllerRepresentable {
-
-    @Environment(\.presentationMode)
-    var presentationMode
-
-    @Binding var image: Image
-
-    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-
-        @Binding var presentationMode: PresentationMode
-        @Binding var image: Image
-
-        init(presentationMode: Binding<PresentationMode>, image: Binding<Image>) {
-            _presentationMode = presentationMode
-            _image = image
+struct DateEditorView: View {
+    
+    @Binding var date: Date
+    
+    let heights = PresentationDetent.fraction(0.4)
+    
+    var body: some View {
+        VStack {
+            DatePicker(selection: $date,
+                       in: Date()...,
+                       displayedComponents: [.date]) {
+                VStack {
+                    Text("Выбор месяца").font(.body)
+                    Text("(число не влияет)").font(.caption)
+                }
+            }
+            .datePickerStyle(.wheel)
+            .presentationDetents(Set(arrayLiteral: heights))
         }
+    }
+}
 
-        func imagePickerController(_ picker: UIImagePickerController,
-                                   didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            let uiImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-            image = Image(uiImage: uiImage)
-            presentationMode.dismiss()
-
+struct FontEditorView: View {
+    @Binding var fontFamily: String
+    @Binding var isWhite: Bool
+    var fontValue: Binding<Double>
+    
+    let heights = PresentationDetent.fraction(0.4)
+        
+    var body: some View {
+        VStack(spacing: 16) {
+            Toggle(isOn: $isWhite) {
+                Text("White color scheme")
+            }
+            Picker("Please choose a color", selection: $fontFamily) {
+                ForEach(UIFont.familyNames, id: \.self) {
+                    Text($0)
+                }
+            }.pickerStyle(.wheel)
+            Text("Размер шрифта")
+            Slider(value: fontValue, in: 1...5) {
+                Text("Размер шрифта")
+            }
         }
-
-        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            presentationMode.dismiss()
-        }
-
+        .padding()
+        .presentationDetents(Set(arrayLiteral: heights))
     }
-
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(presentationMode: presentationMode, image: $image)
-    }
-
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
-        let picker = UIImagePickerController()
-        picker.delegate = context.coordinator
-        return picker
-    }
-
-    func updateUIViewController(_ uiViewController: UIImagePickerController,
-                                context: UIViewControllerRepresentableContext<ImagePicker>) {
-
-    }
-
 }
 
 struct ContentView_Previews: PreviewProvider {

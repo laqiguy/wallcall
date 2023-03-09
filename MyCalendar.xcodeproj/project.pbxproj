@@ -7,23 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		499C0DAC29B9F62300574FA7 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 499C0DAB29B9F62300574FA7 /* FirebaseCrashlytics */; };
+		499C0DAF29BA0CF400574FA7 /* CoFoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 499C0DAD29BA0CF400574FA7 /* CoFoSans-Regular.ttf */; };
+		499C0DB029BA0CF400574FA7 /* CoFoRedmadrobot-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 499C0DAE29BA0CF400574FA7 /* CoFoRedmadrobot-Regular.otf */; };
+		499C0DB329BA14FE00574FA7 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499C0DB229BA14FE00574FA7 /* Helpers.swift */; };
+		499C0DB529BA16DC00574FA7 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499C0DB429BA16DC00574FA7 /* ImagePicker.swift */; };
+		49A9012429B9E9AA000B588C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49A9012329B9E9AA000B588C /* GoogleService-Info.plist */; };
 		49FB008629B719AC00C2AF09 /* MyCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB008529B719AC00C2AF09 /* MyCalendarApp.swift */; };
 		49FB008829B719AC00C2AF09 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB008729B719AC00C2AF09 /* ContentView.swift */; };
 		49FB008A29B719AD00C2AF09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49FB008929B719AD00C2AF09 /* Assets.xcassets */; };
 		49FB008D29B719AD00C2AF09 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49FB008C29B719AD00C2AF09 /* Preview Assets.xcassets */; };
-		49FB009429B74CA700C2AF09 /* CalendarCalc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB009329B74CA700C2AF09 /* CalendarCalc.swift */; };
+		49FB009429B74CA700C2AF09 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB009329B74CA700C2AF09 /* Month.swift */; };
 		49FB009729B76A8400C2AF09 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49FB009629B76A8400C2AF09 /* Launch Screen.storyboard */; };
 		49FB009B29B79FBA00C2AF09 /* Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB009A29B79FBA00C2AF09 /* Zoom.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		499C0DAD29BA0CF400574FA7 /* CoFoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CoFoSans-Regular.ttf"; sourceTree = "<group>"; };
+		499C0DAE29BA0CF400574FA7 /* CoFoRedmadrobot-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CoFoRedmadrobot-Regular.otf"; sourceTree = "<group>"; };
+		499C0DB229BA14FE00574FA7 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		499C0DB429BA16DC00574FA7 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		49A9012329B9E9AA000B588C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		49FB008229B719AC00C2AF09 /* MyCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49FB008529B719AC00C2AF09 /* MyCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCalendarApp.swift; sourceTree = "<group>"; };
 		49FB008729B719AC00C2AF09 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		49FB008929B719AD00C2AF09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49FB008C29B719AD00C2AF09 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		49FB009329B74CA700C2AF09 /* CalendarCalc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCalc.swift; sourceTree = "<group>"; };
-		49FB009529B767CB00C2AF09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		49FB009329B74CA700C2AF09 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
+		49FB009529B767CB00C2AF09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49FB009629B76A8400C2AF09 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		49FB009A29B79FBA00C2AF09 /* Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zoom.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -33,17 +44,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				499C0DAC29B9F62300574FA7 /* FirebaseCrashlytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		499C0DAA29B9F62300574FA7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		499C0DB129BA0CFD00574FA7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				499C0DAE29BA0CF400574FA7 /* CoFoRedmadrobot-Regular.otf */,
+				499C0DAD29BA0CF400574FA7 /* CoFoSans-Regular.ttf */,
+				49FB009529B767CB00C2AF09 /* Info.plist */,
+				49A9012329B9E9AA000B588C /* GoogleService-Info.plist */,
+				49FB009629B76A8400C2AF09 /* Launch Screen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		49FB007929B719AC00C2AF09 = {
 			isa = PBXGroup;
 			children = (
 				49FB008429B719AC00C2AF09 /* MyCalendar */,
 				49FB008329B719AC00C2AF09 /* Products */,
+				499C0DAA29B9F62300574FA7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,14 +90,15 @@
 		49FB008429B719AC00C2AF09 /* MyCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				499C0DB129BA0CFD00574FA7 /* Supporting Files */,
 				49FB009A29B79FBA00C2AF09 /* Zoom.swift */,
-				49FB009529B767CB00C2AF09 /* Info.plist */,
 				49FB008529B719AC00C2AF09 /* MyCalendarApp.swift */,
 				49FB008729B719AC00C2AF09 /* ContentView.swift */,
-				49FB009329B74CA700C2AF09 /* CalendarCalc.swift */,
+				499C0DB429BA16DC00574FA7 /* ImagePicker.swift */,
+				49FB009329B74CA700C2AF09 /* Month.swift */,
+				499C0DB229BA14FE00574FA7 /* Helpers.swift */,
 				49FB008929B719AD00C2AF09 /* Assets.xcassets */,
 				49FB008B29B719AD00C2AF09 /* Preview Content */,
-				49FB009629B76A8400C2AF09 /* Launch Screen.storyboard */,
 			);
 			path = MyCalendar;
 			sourceTree = "<group>";
@@ -94,6 +127,9 @@
 			dependencies = (
 			);
 			name = MyCalendar;
+			packageProductDependencies = (
+				499C0DAB29B9F62300574FA7 /* FirebaseCrashlytics */,
+			);
 			productName = MyCalendar;
 			productReference = 49FB008229B719AC00C2AF09 /* MyCalendar.app */;
 			productType = "com.apple.product-type.application";
@@ -122,6 +158,9 @@
 				Base,
 			);
 			mainGroup = 49FB007929B719AC00C2AF09;
+			packageReferences = (
+				49A9012229B9E999000B588C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 49FB008329B719AC00C2AF09 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,6 +176,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				49FB009729B76A8400C2AF09 /* Launch Screen.storyboard in Resources */,
+				499C0DB029BA0CF400574FA7 /* CoFoRedmadrobot-Regular.otf in Resources */,
+				49A9012429B9E9AA000B588C /* GoogleService-Info.plist in Resources */,
+				499C0DAF29BA0CF400574FA7 /* CoFoSans-Regular.ttf in Resources */,
 				49FB008D29B719AD00C2AF09 /* Preview Assets.xcassets in Resources */,
 				49FB008A29B719AD00C2AF09 /* Assets.xcassets in Resources */,
 			);
@@ -150,8 +192,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				49FB008829B719AC00C2AF09 /* ContentView.swift in Sources */,
-				49FB009429B74CA700C2AF09 /* CalendarCalc.swift in Sources */,
+				49FB009429B74CA700C2AF09 /* Month.swift in Sources */,
 				49FB009B29B79FBA00C2AF09 /* Zoom.swift in Sources */,
+				499C0DB529BA16DC00574FA7 /* ImagePicker.swift in Sources */,
+				499C0DB329BA14FE00574FA7 /* Helpers.swift in Sources */,
 				49FB008629B719AC00C2AF09 /* MyCalendarApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,7 +330,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 42LRQS6X44;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MyCalendar/Info.plist;
+				INFOPLIST_FILE = "MyCalendar/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WallCal;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -325,7 +369,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 42LRQS6X44;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MyCalendar/Info.plist;
+				INFOPLIST_FILE = "MyCalendar/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WallCal;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -373,6 +417,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		49A9012229B9E999000B588C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		499C0DAB29B9F62300574FA7 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49A9012229B9E999000B588C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 49FB007A29B719AC00C2AF09 /* Project object */;
 }

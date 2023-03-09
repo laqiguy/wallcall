@@ -36,81 +36,81 @@ struct ImageModifier: ViewModifier {
         .gesture(doubleTapGesture)
         .animation(.easeInOut, value: currentScale)
     }
-}
-
-class PinchZoomView: UIView {
-    let minScale: CGFloat
-    let maxScale: CGFloat
-    var isPinching: Bool = false
-    var scale: CGFloat = 1.0
-    let scaleChange: (CGFloat) -> Void
     
-    init(minScale: CGFloat,
-           maxScale: CGFloat,
-         currentScale: CGFloat,
-         scaleChange: @escaping (CGFloat) -> Void) {
-        self.minScale = minScale
-        self.maxScale = maxScale
-        self.scale = currentScale
-        self.scaleChange = scaleChange
-        super.init(frame: .zero)
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinch(gesture:)))
-        pinchGesture.cancelsTouchesInView = false
-        addGestureRecognizer(pinchGesture)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
-    
-    @objc private func pinch(gesture: UIPinchGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            isPinching = true
-            
-        case .changed, .ended:
-            if gesture.scale <= minScale {
-                scale = minScale
-            } else if gesture.scale >= maxScale {
-                scale = maxScale
-            } else {
-                scale = gesture.scale
+    private class PinchZoomView: UIView {
+        let minScale: CGFloat
+        let maxScale: CGFloat
+        var isPinching: Bool = false
+        var scale: CGFloat = 1.0
+        let scaleChange: (CGFloat) -> Void
+        
+        init(minScale: CGFloat,
+               maxScale: CGFloat,
+             currentScale: CGFloat,
+             scaleChange: @escaping (CGFloat) -> Void) {
+            self.minScale = minScale
+            self.maxScale = maxScale
+            self.scale = currentScale
+            self.scaleChange = scaleChange
+            super.init(frame: .zero)
+            let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinch(gesture:)))
+            pinchGesture.cancelsTouchesInView = false
+            addGestureRecognizer(pinchGesture)
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError()
+        }
+        
+        @objc private func pinch(gesture: UIPinchGestureRecognizer) {
+            switch gesture.state {
+            case .began:
+                isPinching = true
+                
+            case .changed, .ended:
+                if gesture.scale <= minScale {
+                    scale = minScale
+                } else if gesture.scale >= maxScale {
+                    scale = maxScale
+                } else {
+                    scale = gesture.scale
+                }
+                scaleChange(scale)
+            case .cancelled, .failed:
+                isPinching = false
+                scale = 1.0
+            default:
+                break
             }
-            scaleChange(scale)
-        case .cancelled, .failed:
-            isPinching = false
-            scale = 1.0
-        default:
-            break
         }
     }
-}
 
-struct PinchZoom: UIViewRepresentable {
-    let minScale: CGFloat
-    let maxScale: CGFloat
-    @Binding var scale: CGFloat
-    @Binding var isPinching: Bool
-    
-    func makeUIView(context: Context) -> PinchZoomView {
-        let pinchZoomView = PinchZoomView(minScale: minScale, maxScale: maxScale, currentScale: scale, scaleChange: { scale = $0 })
-        return pinchZoomView
+    private struct PinchZoom: UIViewRepresentable {
+        let minScale: CGFloat
+        let maxScale: CGFloat
+        @Binding var scale: CGFloat
+        @Binding var isPinching: Bool
+        
+        func makeUIView(context: Context) -> PinchZoomView {
+            let pinchZoomView = PinchZoomView(minScale: minScale, maxScale: maxScale, currentScale: scale, scaleChange: { scale = $0 })
+            return pinchZoomView
+        }
+        
+        func updateUIView(_ pageControl: PinchZoomView, context: Context) { }
     }
-    
-    func updateUIView(_ pageControl: PinchZoomView, context: Context) { }
-}
 
-struct PinchToZoom: ViewModifier {
-    let minScale: CGFloat
-    let maxScale: CGFloat
-    @Binding var scale: CGFloat
-    @State var anchor: UnitPoint = .center
-    @State var isPinching: Bool = false
-    
-    func body(content: Content) -> some View {
-        content
-            .scaleEffect(scale, anchor: anchor)
-            .animation(.spring(), value: isPinching)
-            .overlay(PinchZoom(minScale: minScale, maxScale: maxScale, scale: $scale, isPinching: $isPinching))
+    private struct PinchToZoom: ViewModifier {
+        let minScale: CGFloat
+        let maxScale: CGFloat
+        @Binding var scale: CGFloat
+        @State var anchor: UnitPoint = .center
+        @State var isPinching: Bool = false
+        
+        func body(content: Content) -> some View {
+            content
+                .scaleEffect(scale, anchor: anchor)
+                .animation(.spring(), value: isPinching)
+                .overlay(PinchZoom(minScale: minScale, maxScale: maxScale, scale: $scale, isPinching: $isPinching))
+        }
     }
 }
