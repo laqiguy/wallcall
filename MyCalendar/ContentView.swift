@@ -60,7 +60,7 @@ struct ContentView: View {
                     image
                         .resizable()
                         .scaledToFill()
-                        .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
+                        .modifier(ImageZoomModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
                         .onTapGesture {
                             self.isShowPhotoPicker.toggle()
                         }
@@ -127,14 +127,10 @@ struct DateEditorView: View {
     
     var body: some View {
         VStack {
+            Text("Выбор месяца (число не влияет)")
             DatePicker(selection: $date,
                        in: Date()...,
-                       displayedComponents: [.date]) {
-                VStack {
-                    Text("Выбор месяца").font(.body)
-                    Text("(число не влияет)").font(.caption)
-                }
-            }
+                       displayedComponents: [.date]) { }
             .datePickerStyle(.wheel)
             .presentationDetents(Set(arrayLiteral: heights))
         }

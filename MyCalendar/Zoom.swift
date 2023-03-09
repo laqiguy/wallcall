@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-struct ImageModifier: ViewModifier {
+struct ImageZoomModifier: ViewModifier {
     private var contentSize: CGSize
     private var min: CGFloat = 1.0
     private var max: CGFloat = 3.0
