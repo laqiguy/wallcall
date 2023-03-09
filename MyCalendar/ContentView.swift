@@ -123,17 +123,56 @@ struct DateEditorView: View {
     
     @Binding var date: Date
     
-    let heights = PresentationDetent.fraction(0.4)
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = .init(identifier: "ru_RU")
+        formatter.dateFormat = "dd LLLL yyyy"
+        return formatter
+    }()
+    
+    private let months: [String]
+    private let years: [String]
+    @State private var selectedMonth: Int = 0
+    @State private var selectedYear: Int = 0
+    
+    private let heights = PresentationDetent.fraction(0.4)
+    
+    init(date: Binding<Date>) {
+        self._date = date
+        let comps = calendar.dateComponents([.year, .month], from: date.wrappedValue)
+        let month = comps.month ?? 0
+        let year = comps.year ?? 2023
+        
+        self.years = stride(from: year, to: year + 10, by: 1).map { "\($0)" }
+        let months = calendar.standaloneMonthSymbols
+        self.months = months
+        self._selectedMonth = .init(wrappedValue: month)
+        self._selectedYear = .init(wrappedValue: years.firstIndex(of: "\(year)") ?? 0)
+    }
     
     var body: some View {
-        VStack {
-            Text("Выбор месяца (число не влияет)")
-            DatePicker(selection: $date,
-                       in: Date()...,
-                       displayedComponents: [.date]) { }
-            .datePickerStyle(.wheel)
-            .presentationDetents(Set(arrayLiteral: heights))
+        HStack() {
+            Picker(selection: $selectedMonth) {
+                ForEach(months.indices, id: \.self) { index in
+                    Text(months[index])
+                }
+            } label: { }
+            Picker(selection: $selectedYear) {
+                ForEach(years.indices, id: \.self) { index in
+                    Text(years[index])
+                }
+            } label: { }
         }
+        .onChange(of: selectedMonth, perform: { newValue in
+            let dateString = "01 \(months[newValue]) \(years[selectedYear])"
+            date = dateFormatter.date(from: dateString) ?? date
+        })
+        .onChange(of: selectedYear, perform: { newValue in
+            let dateString = "01 \(months[selectedMonth]) \(years[newValue])"
+            date = dateFormatter.date(from: dateString) ?? date
+        })
+        .pickerStyle(.wheel)
+        .presentationDetents(Set(arrayLiteral: heights))
     }
 }
 
@@ -142,7 +181,7 @@ struct FontEditorView: View {
     @Binding var isWhite: Bool
     var fontValue: Binding<Double>
     
-    let heights = PresentationDetent.fraction(0.4)
+    private let heights = PresentationDetent.fraction(0.4)
         
     var body: some View {
         VStack(spacing: 16) {
