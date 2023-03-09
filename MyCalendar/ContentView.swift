@@ -12,16 +12,10 @@ struct ContentView: View {
     
     @State var current: Date = Date()
     
-    var month: Month {
-        Month.generate(current)
-    }
+    @State var month: Month
     
-    var textColor: Color {
-        isWhite ? .white : .black
-    }
-    var shadowColor: Color {
-        isWhite ? .black : .white
-    }
+    @State var textColor: Color = .white
+    @State var shadowColor: Color = .black
     
     @State var isShowPhotoPicker: Bool = false
     @State var isShowFontPicker: Bool = false
@@ -30,28 +24,33 @@ struct ContentView: View {
     @State var image: Image = Image("1")
     @State var isWhite: Bool = true
     @State var scale: CGFloat = 1.0
-    let defaultFontScale: Int = 3
     @State var fontScale: Int = 3
     @State var fontFamily: String = "Baskerville"
-    var fontMultiplier: Double {
-        switch fontScale {
-        case 1: return 0.75
-        case 2: return 0.90
-        case 3: return 1.0
-        case 4: return 1.1
-        case 5: return 1.25
-        default: return 1.0
-        }
-    }
+    @State var fontMultiplier: Double = 1.0
     var fontScaleProxy: Binding<Double> {
         Binding<Double>(get: {
             return Double(fontScale)
         }, set: {
             fontScale = Int($0)
+            fontMultiplier = {
+                switch fontScale {
+                case 1: return 0.75
+                case 2: return 0.90
+                case 3: return 1.0
+                case 4: return 1.1
+                case 5: return 1.25
+                default: return 1.0
+                }
+            }()
         })
     }
 
     let heights = PresentationDetent.fraction(0.4)
+    
+    init() {
+        self._month = .init(initialValue: Month.generate(Date()))
+        self._current = .init(initialValue: Date())
+    }
     
     var body: some View {
         NavigationView {
@@ -104,6 +103,13 @@ struct ContentView: View {
                     }
                 }
             }
+            .onChange(of: isWhite) { newValue in
+                textColor = newValue ? .white : .black
+                shadowColor = newValue ? .black : .white
+            }
+            .onChange(of: current) { newValue in
+                month = Month.generate(newValue)
+            }
             .ignoresSafeArea()
             .sheet(isPresented: $isShowPhotoPicker) {
                 ImagePicker(image: self.$image)
@@ -115,6 +121,28 @@ struct ContentView: View {
                 DateEditorView(date: $current)
             }
             .statusBar(hidden: true)
+        }
+    }
+}
+
+struct TextLineView: View {
+    
+    @Binding var data: [String]
+    @Binding var multiplier: Double
+    @Binding var fontFamily: String
+    @Binding var textColor: Color
+    @Binding var shadowColor: Color
+    
+    var body: some View {
+        HStack(alignment: .center, spacing: 4 * multiplier) {
+            ForEach(data, id: \.self) { text in
+                Text(text)
+                    .font(.custom(fontFamily, size: 14 * multiplier))
+                    .foregroundColor(textColor)
+                    .shadow(color: shadowColor,
+                            radius: 5)
+                    .frame(width: 24 * multiplier, height: 24 * multiplier)
+            }
         }
     }
 }
