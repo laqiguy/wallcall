@@ -9,16 +9,12 @@ import PhotosUI
 import SwiftUI
 
 struct TextViewModel {
+    var colors: [Color] = [.white, .black, .red, .green, .blue]
     var textColor: Color = .white
     var shadowColor: Color = .black
     var isWhite: Bool = true
     var family: String = "Baskerville"
     var scale: Double = 1.0
-    
-    mutating func update() {
-        textColor = isWhite ? .white : .black
-        shadowColor = isWhite ? .black : .white
-    }
 }
 
 struct MainView: View {
@@ -40,10 +36,6 @@ struct MainView: View {
         
         mutating func updateMonth() {
             self.month = Month.generate(date)
-        }
-        
-        mutating func updateColor() {
-            textViewModel.update()
         }
     }
     
@@ -115,9 +107,6 @@ struct MainView: View {
             }
             .sheet(isPresented: $isShowFontPicker) {
                 FontEditorView(textViewModel: $viewModel.textViewModel, fontValue: fontScaleProxy)
-            }
-            .onChange(of: viewModel.textViewModel.isWhite) { newValue in
-                viewModel.updateColor()
             }
             .sheet(isPresented: $isShowDatePicker) {
                 DateEditorView(current: viewModel.current, date: $viewModel.date)
