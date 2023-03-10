@@ -25,6 +25,7 @@ struct MainView: View {
     
     struct ViewModel {
         var textViewModel: TextViewModel = TextViewModel()
+        var image: Image = Image("1")
         let current: Date
         var date: Date
         var month: Month
@@ -42,7 +43,7 @@ struct MainView: View {
         }
         
         mutating func updateColor() {
-            
+            textViewModel.update()
         }
     }
     
@@ -68,9 +69,7 @@ struct MainView: View {
     @State var isShowPhotoPicker: Bool = false
     @State var isShowFontPicker: Bool = false
     @State var isShowDatePicker: Bool = false
-    
-    @State var image: Image = Image("1")
-    
+        
     init() {
         self._viewModel = .init(initialValue: ViewModel(date: Date()))
     }
@@ -79,7 +78,7 @@ struct MainView: View {
         NavigationView {
             ZStack {
                 GeometryReader { proxy in
-                    image
+                    viewModel.image
                         .resizable()
                         .scaledToFill()
                         .modifier(ImageZoomModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
@@ -91,6 +90,7 @@ struct MainView: View {
                     Text(viewModel.month.name)
                         .font(.custom(viewModel.textViewModel.family, size: 24 * viewModel.textViewModel.scale))
                         .foregroundColor(viewModel.textViewModel.textColor)
+                        .clipped()
                         .shadow(color: viewModel.textViewModel.shadowColor,
                                 radius: 5)
                         .onTapGesture {
@@ -111,14 +111,13 @@ struct MainView: View {
                 }
             }
             .sheet(isPresented: $isShowPhotoPicker) {
-                ImagePicker(image: self.$image)
+                ImagePicker(image: self.$viewModel.image)
             }
             .sheet(isPresented: $isShowFontPicker) {
                 FontEditorView(textViewModel: $viewModel.textViewModel, fontValue: fontScaleProxy)
             }
             .onChange(of: viewModel.textViewModel.isWhite) { newValue in
-                viewModel.textViewModel.textColor = newValue ? .white : .black
-                viewModel.textViewModel.shadowColor = newValue ? .black : .white
+                viewModel.updateColor()
             }
             .sheet(isPresented: $isShowDatePicker) {
                 DateEditorView(current: viewModel.current, date: $viewModel.date)

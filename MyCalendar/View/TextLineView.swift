@@ -18,8 +18,9 @@ struct TextLineView: View {
                 Text(text)
                     .font(.custom(textViewModel.family, size: 14 * textViewModel.scale))
                     .foregroundColor(textViewModel.textColor)
+                    .clipped()
                     .shadow(color: textViewModel.shadowColor,
-                            radius: 10)
+                            radius: 1)
                     .frame(width: 24 * textViewModel.scale, height: 24 * textViewModel.scale)
             }
         }

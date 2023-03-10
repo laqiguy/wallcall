@@ -14,7 +14,7 @@ struct DateEditorView: View {
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = .init(identifier: "ru_RU")
-        formatter.dateFormat = "dd LLLL yyyy"
+        formatter.dateFormat = "LLLL yyyy"
         return formatter
     }()
     
@@ -55,11 +55,11 @@ struct DateEditorView: View {
             } label: { }
         }
         .onChange(of: selectedMonth, perform: { newValue in
-            let dateString = "01 \(months[newValue]) \(years[selectedYear])"
+            let dateString = "\(months[newValue]) \(years[selectedYear])"
             date = dateFormatter.date(from: dateString) ?? date
         })
         .onChange(of: selectedYear, perform: { newValue in
-            let dateString = "01 \(months[selectedMonth]) \(years[newValue])"
+            let dateString = "\(months[selectedMonth]) \(years[newValue])"
             date = dateFormatter.date(from: dateString) ?? date
         })
         .pickerStyle(.wheel)

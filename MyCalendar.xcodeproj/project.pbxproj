@@ -67,6 +67,7 @@
 		499C0DB129BA0CFD00574FA7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				49FB008929B719AD00C2AF09 /* Assets.xcassets */,
 				499C0DAE29BA0CF400574FA7 /* CoFoRedmadrobot-Regular.otf */,
 				499C0DAD29BA0CF400574FA7 /* CoFoSans-Regular.ttf */,
 				49FB009529B767CB00C2AF09 /* Info.plist */,
@@ -74,6 +75,18 @@
 				49FB009629B76A8400C2AF09 /* Launch Screen.storyboard */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		499C0DBC29BB2BB400574FA7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				49FB008729B719AC00C2AF09 /* MainView.swift */,
+				499C0DBA29BB181000574FA7 /* FontEditorView.swift */,
+				499C0DB829BB17FF00574FA7 /* DateEditorView.swift */,
+				499C0DB629BB17E300574FA7 /* TextLineView.swift */,
+				499C0DB429BA16DC00574FA7 /* ImagePicker.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		49FB007929B719AC00C2AF09 = {
@@ -99,14 +112,9 @@
 				499C0DB129BA0CFD00574FA7 /* Supporting Files */,
 				49FB009A29B79FBA00C2AF09 /* Zoom.swift */,
 				49FB008529B719AC00C2AF09 /* MyCalendarApp.swift */,
-				49FB008729B719AC00C2AF09 /* MainView.swift */,
-				499C0DBA29BB181000574FA7 /* FontEditorView.swift */,
-				499C0DB829BB17FF00574FA7 /* DateEditorView.swift */,
-				499C0DB629BB17E300574FA7 /* TextLineView.swift */,
-				499C0DB429BA16DC00574FA7 /* ImagePicker.swift */,
+				499C0DBC29BB2BB400574FA7 /* View */,
 				49FB009329B74CA700C2AF09 /* Month.swift */,
 				499C0DB229BA14FE00574FA7 /* Helpers.swift */,
-				49FB008929B719AD00C2AF09 /* Assets.xcassets */,
 				49FB008B29B719AD00C2AF09 /* Preview Content */,
 			);
 			path = MyCalendar;
