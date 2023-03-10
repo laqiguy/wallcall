@@ -33,6 +33,7 @@ struct FontEditorView: View {
                 ForEach(textViewModel.colors, id: \.self) { color in
                     Button(action: {
                         textViewModel.textColor = color
+                        textViewModel.shadowColor = color == .black ? .white : .black
                     }) {
                         Circle()
                             .fill(color)
@@ -53,9 +54,6 @@ struct FontEditorView: View {
             Slider(value: fontValue, in: 1...5) {
                 Text("Размер шрифта")
             }
-        }
-        .onChange(of: selectedColor) { newValue in
-            textViewModel.textColor = textViewModel.colors[newValue]
         }
         .padding()
         .presentationDetents(Set(arrayLiteral: heights))

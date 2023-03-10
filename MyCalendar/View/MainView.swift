@@ -9,11 +9,11 @@ import PhotosUI
 import SwiftUI
 
 struct TextViewModel {
-    var colors: [Color] = [.white, .black, .red, .green, .blue]
+    var colors: [Color] = [.white, .black, .init(red: 234.0/255, green: 51.0/255, blue: 35.0/255)]
     var textColor: Color = .white
     var shadowColor: Color = .black
     var isWhite: Bool = true
-    var family: String = "Baskerville"
+    var family: String = "CoFo Redmadrobot"
     var scale: Double = 1.0
 }
 
@@ -84,7 +84,7 @@ struct MainView: View {
                         .foregroundColor(viewModel.textViewModel.textColor)
                         .clipped()
                         .shadow(color: viewModel.textViewModel.shadowColor,
-                                radius: 5)
+                                radius: 2)
                         .onTapGesture {
                             isShowDatePicker = true
                         }
