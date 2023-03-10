@@ -8,31 +8,29 @@
 import PhotosUI
 import SwiftUI
 
+struct TextViewModel {
+    var textColor: Color = .white
+    var shadowColor: Color = .black
+    var isWhite: Bool = true
+    var family: String = "Baskerville"
+    var scale: Double = 1.0
+}
+
 struct ContentView: View {
     
     @State var current: Date = Date()
     
     @State var month: Month
     
-    @State var textColor: Color = .white
-    @State var shadowColor: Color = .black
+    @State var textViewModel: TextViewModel = TextViewModel()
     
-    @State var isShowPhotoPicker: Bool = false
-    @State var isShowFontPicker: Bool = false
-    @State var isShowDatePicker: Bool = false
-    
-    @State var image: Image = Image("1")
-    @State var isWhite: Bool = true
-    @State var scale: CGFloat = 1.0
     @State var fontScale: Int = 3
-    @State var fontFamily: String = "Baskerville"
-    @State var fontMultiplier: Double = 1.0
     var fontScaleProxy: Binding<Double> {
         Binding<Double>(get: {
             return Double(fontScale)
         }, set: {
             fontScale = Int($0)
-            fontMultiplier = {
+            textViewModel.scale = {
                 switch fontScale {
                 case 1: return 0.75
                 case 2: return 0.90
@@ -44,8 +42,12 @@ struct ContentView: View {
             }()
         })
     }
-
-    let heights = PresentationDetent.fraction(0.4)
+    
+    @State var isShowPhotoPicker: Bool = false
+    @State var isShowFontPicker: Bool = false
+    @State var isShowDatePicker: Bool = false
+    
+    @State var image: Image = Image("1")
     
     init() {
         self._month = .init(initialValue: Month.generate(Date()))
@@ -64,37 +66,19 @@ struct ContentView: View {
                             self.isShowPhotoPicker.toggle()
                         }
                 }
-                VStack(alignment: .center, spacing: 10) {
+                VStack(alignment: .center, spacing: 4 * textViewModel.scale) {
                     Text(month.name)
-                        .font(.custom(fontFamily, size: 24 * fontMultiplier))
-                        .foregroundColor(textColor)
-                        .shadow(color: shadowColor,
+                        .font(.custom(textViewModel.family, size: 24 * textViewModel.scale))
+                        .foregroundColor(textViewModel.textColor)
+                        .shadow(color: textViewModel.shadowColor,
                                 radius: 5)
                         .onTapGesture {
                             isShowDatePicker = true
                         }
-                    HStack(alignment: .center, spacing: 4 * fontMultiplier) {
-                        ForEach(month.days, id: \.self) { day in
-                            Text(day)
-                                .font(.custom(fontFamily, size: 14 * fontMultiplier))
-                                .foregroundColor(textColor)
-                                .shadow(color: shadowColor,
-                                        radius: 5)
-                                .frame(width: 24 * fontMultiplier, height: 24 * fontMultiplier)
-                        }
-                    }
-                    VStack(spacing: 4 * fontMultiplier) {
-                        ForEach(month.values, id: \.number) { week in
-                            HStack(alignment: .center, spacing: 4 * fontMultiplier) {
-                                ForEach(week.values, id: \.self) { day in
-                                    Text(day)
-                                        .font(.custom(fontFamily, size: 14 * fontMultiplier))
-                                        .foregroundColor(textColor)
-                                        .shadow(color: shadowColor,
-                                                radius: 5)
-                                        .frame(width: 24 * fontMultiplier, height: 24 * fontMultiplier)
-                                }
-                            }
+                    TextLineView(data: $month.days, textViewModel: $textViewModel)
+                    VStack(spacing: 4 * textViewModel.scale) {
+                        ForEach(0..<month.values.count) { index in
+                            TextLineView(data: $month.values[index].values, textViewModel: $textViewModel)
                         }
                     }
                     .contentShape(Rectangle())
@@ -103,9 +87,9 @@ struct ContentView: View {
                     }
                 }
             }
-            .onChange(of: isWhite) { newValue in
-                textColor = newValue ? .white : .black
-                shadowColor = newValue ? .black : .white
+            .onChange(of: textViewModel.isWhite) { newValue in
+                textViewModel.textColor = newValue ? .white : .black
+                textViewModel.shadowColor = newValue ? .black : .white
             }
             .onChange(of: current) { newValue in
                 month = Month.generate(newValue)
@@ -115,7 +99,7 @@ struct ContentView: View {
                 ImagePicker(image: self.$image)
             }
             .sheet(isPresented: $isShowFontPicker) {
-                FontEditorView(fontFamily: $fontFamily, isWhite: $isWhite, fontValue: fontScaleProxy)
+                FontEditorView(textViewModel: $textViewModel, fontValue: fontScaleProxy)
             }
             .sheet(isPresented: $isShowDatePicker) {
                 DateEditorView(date: $current)
@@ -128,20 +112,17 @@ struct ContentView: View {
 struct TextLineView: View {
     
     @Binding var data: [String]
-    @Binding var multiplier: Double
-    @Binding var fontFamily: String
-    @Binding var textColor: Color
-    @Binding var shadowColor: Color
+    @Binding var textViewModel: TextViewModel
     
     var body: some View {
-        HStack(alignment: .center, spacing: 4 * multiplier) {
+        HStack(alignment: .center, spacing: 4 * textViewModel.scale) {
             ForEach(data, id: \.self) { text in
                 Text(text)
-                    .font(.custom(fontFamily, size: 14 * multiplier))
-                    .foregroundColor(textColor)
-                    .shadow(color: shadowColor,
-                            radius: 5)
-                    .frame(width: 24 * multiplier, height: 24 * multiplier)
+                    .font(.custom(textViewModel.family, size: 14 * textViewModel.scale))
+                    .foregroundColor(textViewModel.textColor)
+                    .shadow(color: textViewModel.shadowColor,
+                            radius: 10)
+                    .frame(width: 24 * textViewModel.scale, height: 24 * textViewModel.scale)
             }
         }
     }
@@ -205,18 +186,17 @@ struct DateEditorView: View {
 }
 
 struct FontEditorView: View {
-    @Binding var fontFamily: String
-    @Binding var isWhite: Bool
+    @Binding var textViewModel: TextViewModel
     var fontValue: Binding<Double>
     
     private let heights = PresentationDetent.fraction(0.4)
         
     var body: some View {
         VStack(spacing: 16) {
-            Toggle(isOn: $isWhite) {
+            Toggle(isOn: $textViewModel.isWhite) {
                 Text("White color scheme")
             }
-            Picker("Please choose a color", selection: $fontFamily) {
+            Picker("Please choose a color", selection: $textViewModel.family) {
                 ForEach(UIFont.familyNames, id: \.self) {
                     Text($0)
                 }
