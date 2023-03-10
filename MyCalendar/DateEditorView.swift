@@ -23,19 +23,22 @@ struct DateEditorView: View {
     @State private var selectedMonth: Int = 0
     @State private var selectedYear: Int = 0
     
-    private let heights = PresentationDetent.fraction(0.4)
+    private let heights = PresentationDetent.fraction(0.3)
     
-    init(date: Binding<Date>) {
+    init(current: Date, date: Binding<Date>) {
         self._date = date
-        let comps = calendar.dateComponents([.year, .month], from: date.wrappedValue)
-        let month = comps.month ?? 0
-        let year = comps.year ?? 2023
+        let currentDateComponents = calendar.dateComponents([.year, .month], from: current)
+        let currentYear = currentDateComponents.year ?? 2023
         
-        self.years = stride(from: year, to: year + 10, by: 1).map { "\($0)" }
+        let selectedDateComponents = calendar.dateComponents([.year, .month], from: date.wrappedValue)
+        let selectedMonth = (selectedDateComponents.month ?? 1) - 1
+        let selectedYear = selectedDateComponents.year ?? currentYear
+        
+        self.years = stride(from: currentYear, to: currentYear + 10, by: 1).map { "\($0)" }
         let months = calendar.standaloneMonthSymbols
         self.months = months
-        self._selectedMonth = .init(wrappedValue: month)
-        self._selectedYear = .init(wrappedValue: years.firstIndex(of: "\(year)") ?? 0)
+        self._selectedMonth = .init(wrappedValue: selectedMonth)
+        self._selectedYear = .init(wrappedValue: years.firstIndex(of: "\(selectedYear)") ?? 0)
     }
     
     var body: some View {

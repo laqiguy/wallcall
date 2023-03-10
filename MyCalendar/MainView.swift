@@ -25,18 +25,20 @@ struct MainView: View {
     
     struct ViewModel {
         var textViewModel: TextViewModel = TextViewModel()
-        var current: Date = Date()
+        let current: Date
+        var date: Date
         var month: Month
         
         var fontScale: Int = 3
         
         init(date: Date) {
             self.current = date
+            self.date = date
             self.month = Month.generate(date)
         }
         
         mutating func updateMonth() {
-            self.month = Month.generate(current)
+            self.month = Month.generate(date)
         }
         
         mutating func updateColor() {
@@ -119,9 +121,9 @@ struct MainView: View {
                 viewModel.textViewModel.shadowColor = newValue ? .black : .white
             }
             .sheet(isPresented: $isShowDatePicker) {
-                DateEditorView(date: $viewModel.current)
+                DateEditorView(current: viewModel.current, date: $viewModel.date)
             }
-            .onChange(of: viewModel.current) { newValue in
+            .onChange(of: viewModel.date) { newValue in
                 viewModel.updateMonth()
             }
             .ignoresSafeArea()
