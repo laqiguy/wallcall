@@ -21,7 +21,8 @@ struct Month {
     
     static func generate(_ date: Date) -> Month {
         let components = calendar.dateComponents(dateComponents, from: date)
-
+        let monthNumber = components.month ?? 42
+        
         let start = date.startOfMonth()
         let end = date.endOfMonth()
         
@@ -37,7 +38,7 @@ struct Month {
         array.insert(contentsOf: Array<Date?>(repeating: nil, count: (startComp.weekday! - calendar.firstWeekday + 7) % 7), at: 0)
         array.append(contentsOf: Array<Date?>(repeating: nil, count: 7 - array.count % 7))
         
-        var dates = array.chunked(into: 7).map { dates in
+        let dates = array.chunked(into: 7).map { dates in
             return dates.map { date in
                 guard let date else {
                     return " "
@@ -51,14 +52,15 @@ struct Month {
         
         let name = monthFormatter.string(from: date).capitalized
         
-        var month = Month(
+        let weeks = dates.enumerated().map { item in
+            return Week(number: monthNumber * 100 + item.offset, values: item.element)
+        }
+        
+        return Month(
             id: "\(components.month!)+\(components.year!)",
             name: name,
             days: weekdays,
-            values: dates.enumerated().map { item in
-                return Week(number: item.offset, values: item.element)
-            })
-        
-        return month
+            values: weeks
+        )
     }
 }
