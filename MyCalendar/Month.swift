@@ -31,9 +31,6 @@ struct Month {
         let startComp = calendar.dateComponents(
             dateComponents,
             from: start)
-        let endComp = calendar.dateComponents(
-            dateComponents,
-            from: end)
         
         array.insert(contentsOf: Array<Date?>(repeating: nil, count: (startComp.weekday! - calendar.firstWeekday + 7) % 7), at: 0)
         array.append(contentsOf: Array<Date?>(repeating: nil, count: 7 - array.count % 7))
