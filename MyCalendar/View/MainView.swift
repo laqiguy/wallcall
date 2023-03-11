@@ -14,6 +14,7 @@ struct TextViewModel {
     var shadowColor: Color = .black
     var isWhite: Bool = true
     var family: String = "CoFo Redmadrobot"
+    var font: String = "CoFo Redmadrobot"
     var scale: Double = 1.0
 }
 
@@ -80,7 +81,7 @@ struct MainView: View {
                 }
                 VStack(alignment: .center, spacing: 4 * viewModel.textViewModel.scale) {
                     Text(viewModel.month.name)
-                        .font(.custom(viewModel.textViewModel.family, size: 24 * viewModel.textViewModel.scale))
+                        .font(.custom(viewModel.textViewModel.font, size: 24 * viewModel.textViewModel.scale))
                         .foregroundColor(viewModel.textViewModel.textColor)
                         .clipped()
                         .shadow(color: viewModel.textViewModel.shadowColor,

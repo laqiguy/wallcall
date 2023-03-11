@@ -30,31 +30,42 @@ struct FontEditorView: View {
     var body: some View {
         VStack(spacing: 16) {
             HStack {
-                ForEach(textViewModel.colors, id: \.self) { color in
-                    Button(action: {
-                        textViewModel.textColor = color
-                        textViewModel.shadowColor = color == .black ? .white : .black
-                    }) {
-                        Circle()
-                            .fill(color)
-                            .frame(width: 50, height: 50)
-                            .overlay(
-                                Circle()
-                                    .stroke(getSelectionColor(for: color), lineWidth: 3)
-                            )
+                VStack {
+                    ForEach(textViewModel.colors, id: \.self) { color in
+                        Button(action: {
+                            textViewModel.textColor = color
+                            textViewModel.shadowColor = color == .black ? .white : .black
+                        }) {
+                            Circle()
+                                .fill(color)
+                                .frame(width: 50, height: 50)
+                                .overlay(
+                                    Circle()
+                                        .stroke(getSelectionColor(for: color), lineWidth: 3)
+                                )
+                        }
                     }
                 }
+                Picker("Please choose a color", selection: $textViewModel.family) {
+                    ForEach(UIFont.familyNames, id: \.self) {
+                        Text($0)
+                    }
+                }.pickerStyle(.wheel)
             }
-            Picker("Please choose a color", selection: $textViewModel.family) {
-                ForEach(UIFont.familyNames, id: \.self) {
-                    Text($0)
-                }
-            }.pickerStyle(.wheel)
-            Text("Размер шрифта")
             Slider(value: fontValue, in: 1...5) {
                 Text("Размер шрифта")
             }
+            if UIFont.fontNames(forFamilyName: textViewModel.family).count > 1 {
+                Picker("", selection: $textViewModel.font) {
+                    ForEach(UIFont.fontNames(forFamilyName: textViewModel.family), id: \.self) { name in
+                        Text(name).font(.custom(name, size: 14 * textViewModel.scale))
+                    }
+                }
+            }
         }
+        .onChange(of: textViewModel.family, perform: { newValue in
+            textViewModel.font = newValue
+        })
         .padding()
         .presentationDetents(Set(arrayLiteral: heights))
     }

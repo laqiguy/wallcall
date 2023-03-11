@@ -16,7 +16,7 @@ struct TextLineView: View {
         HStack(alignment: .center, spacing: 4 * textViewModel.scale) {
             ForEach(data, id: \.self) { text in
                 Text(text)
-                    .font(.custom(textViewModel.family, size: 14 * textViewModel.scale))
+                    .font(.custom(textViewModel.font, size: 14 * textViewModel.scale))
                     .foregroundColor(textViewModel.textColor)
                     .clipped()
                     .shadow(color: textViewModel.shadowColor,
