@@ -12,7 +12,7 @@ struct FontEditorView: View {
     @State var selectedColor: Int
     var fontValue: Binding<Double>
     
-    private let heights = PresentationDetent.fraction(0.4)
+    private let heights = PresentationDetent.height(280)
         
     init(textViewModel: Binding<TextViewModel>, fontValue: Binding<Double>) {
         self._textViewModel = textViewModel
@@ -38,7 +38,7 @@ struct FontEditorView: View {
                         }) {
                             Circle()
                                 .fill(color)
-                                .frame(width: 50, height: 50)
+                                .frame(width: 40, height: 40)
                                 .overlay(
                                     Circle()
                                         .stroke(getSelectionColor(for: color), lineWidth: 3)
