@@ -45,7 +45,7 @@ struct ImageZoomModifier: ViewModifier {
         let scaleChange: (CGFloat) -> Void
         
         init(minScale: CGFloat,
-               maxScale: CGFloat,
+             maxScale: CGFloat,
              currentScale: CGFloat,
              scaleChange: @escaping (CGFloat) -> Void) {
             self.minScale = minScale

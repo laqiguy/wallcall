@@ -7,5 +7,7 @@
 		<string>CoFoRedmadrobot-Regular.otf</string>
 		<string>CoFoSans-Regular.ttf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict/>
 </dict>
 </plist>
