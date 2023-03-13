@@ -8,8 +8,12 @@
 import PhotosUI
 import SwiftUI
 
+extension Color {
+    static var redMadColor: Color = .init(red: 234.0/255, green: 51.0/255, blue: 35.0/255)
+}
+
 struct TextViewModel {
-    var colors: [Color] = [.white, .black, .init(red: 234.0/255, green: 51.0/255, blue: 35.0/255)]
+    var colors: [Color] = [.white, .black, .redMadColor]
     var textColor: Color = .white
     var shadowColor: Color = .black
     var isWhite: Bool = true
@@ -18,29 +22,29 @@ struct TextViewModel {
     var scale: Double = 1.0
 }
 
-struct MainView: View {
+struct MainViewModel {
+    var textViewModel: TextViewModel = TextViewModel()
+    var image: Image = Image("1")
+    let current: Date
+    var date: Date
+    var month: Month
     
-    struct ViewModel {
-        var textViewModel: TextViewModel = TextViewModel()
-        var image: Image = Image("1")
-        let current: Date
-        var date: Date
-        var month: Month
-        
-        var fontScale: Int = 3
-        
-        init(date: Date) {
-            self.current = date
-            self.date = date
-            self.month = Month.generate(date)
-        }
-        
-        mutating func updateMonth() {
-            self.month = Month.generate(date)
-        }
+    var fontScale: Int = 3
+    
+    init(date: Date) {
+        self.current = date
+        self.date = date
+        self.month = Month.generate(date)
     }
     
-    @State var viewModel: ViewModel
+    mutating func updateMonth() {
+        self.month = Month.generate(date)
+    }
+}
+
+struct MainView: View {
+    
+    @State var viewModel: MainViewModel
     var fontScaleProxy: Binding<Double> {
         Binding<Double>(get: {
             return Double(viewModel.fontScale)
@@ -64,7 +68,7 @@ struct MainView: View {
     @State var isShowDatePicker: Bool = false
         
     init() {
-        self._viewModel = .init(initialValue: ViewModel(date: Date()))
+        self._viewModel = .init(initialValue: MainViewModel(date: Date()))
     }
     
     var body: some View {

@@ -57,14 +57,17 @@ struct FontEditorView: View {
             }
             if UIFont.fontNames(forFamilyName: textViewModel.family).count > 1 {
                 Picker("", selection: $textViewModel.font) {
-                    ForEach(UIFont.fontNames(forFamilyName: textViewModel.family), id: \.self) { name in
-                        Text(name).font(.custom(name, size: 14 * textViewModel.scale))
-                    }
+                    ForEach(
+                        UIFont.fontNames(forFamilyName: textViewModel.family),
+                        id: \.self) { name in
+                            Text(name).font(.custom(name, size: 14 * textViewModel.scale))
+                        }
                 }
             }
         }
         .onChange(of: textViewModel.family, perform: { newValue in
-            textViewModel.font = newValue
+            textViewModel.family = newValue
+            textViewModel.font = UIFont.fontNames(forFamilyName: newValue)[0]
         })
         .padding()
         .presentationDetents(Set(arrayLiteral: heights))
