@@ -15,14 +15,15 @@
 		499C0DB729BB17E300574FA7 /* TextLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499C0DB629BB17E300574FA7 /* TextLineView.swift */; };
 		499C0DB929BB17FF00574FA7 /* DateEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499C0DB829BB17FF00574FA7 /* DateEditorView.swift */; };
 		499C0DBB29BB181000574FA7 /* FontEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499C0DBA29BB181000574FA7 /* FontEditorView.swift */; };
+		499C0DDB29BF285800574FA7 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499C0DD929BF285800574FA7 /* Month.swift */; };
+		499C0DDC29BF285800574FA7 /* TextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499C0DDA29BF285800574FA7 /* TextViewModel.swift */; };
+		499C0DDE29BF286200574FA7 /* Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499C0DDD29BF286200574FA7 /* Zoom.swift */; };
 		49A9012429B9E9AA000B588C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49A9012329B9E9AA000B588C /* GoogleService-Info.plist */; };
 		49FB008629B719AC00C2AF09 /* MyCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB008529B719AC00C2AF09 /* MyCalendarApp.swift */; };
 		49FB008829B719AC00C2AF09 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB008729B719AC00C2AF09 /* MainView.swift */; };
 		49FB008A29B719AD00C2AF09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49FB008929B719AD00C2AF09 /* Assets.xcassets */; };
 		49FB008D29B719AD00C2AF09 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49FB008C29B719AD00C2AF09 /* Preview Assets.xcassets */; };
-		49FB009429B74CA700C2AF09 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB009329B74CA700C2AF09 /* Month.swift */; };
 		49FB009729B76A8400C2AF09 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49FB009629B76A8400C2AF09 /* Launch Screen.storyboard */; };
-		49FB009B29B79FBA00C2AF09 /* Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB009A29B79FBA00C2AF09 /* Zoom.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,16 +34,17 @@
 		499C0DB629BB17E300574FA7 /* TextLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineView.swift; sourceTree = "<group>"; };
 		499C0DB829BB17FF00574FA7 /* DateEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateEditorView.swift; sourceTree = "<group>"; };
 		499C0DBA29BB181000574FA7 /* FontEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontEditorView.swift; sourceTree = "<group>"; };
+		499C0DD929BF285800574FA7 /* Month.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
+		499C0DDA29BF285800574FA7 /* TextViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewModel.swift; sourceTree = "<group>"; };
+		499C0DDD29BF286200574FA7 /* Zoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zoom.swift; sourceTree = "<group>"; };
 		49A9012329B9E9AA000B588C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		49FB008229B719AC00C2AF09 /* MyCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49FB008529B719AC00C2AF09 /* MyCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCalendarApp.swift; sourceTree = "<group>"; };
 		49FB008729B719AC00C2AF09 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		49FB008929B719AD00C2AF09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49FB008C29B719AD00C2AF09 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		49FB009329B74CA700C2AF09 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		49FB009529B767CB00C2AF09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49FB009629B76A8400C2AF09 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		49FB009A29B79FBA00C2AF09 /* Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zoom.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,11 +84,21 @@
 			children = (
 				49FB008729B719AC00C2AF09 /* MainView.swift */,
 				499C0DBA29BB181000574FA7 /* FontEditorView.swift */,
+				499C0DDD29BF286200574FA7 /* Zoom.swift */,
 				499C0DB829BB17FF00574FA7 /* DateEditorView.swift */,
 				499C0DB629BB17E300574FA7 /* TextLineView.swift */,
 				499C0DB429BA16DC00574FA7 /* ImagePicker.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		499C0DD829BF285800574FA7 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				499C0DD929BF285800574FA7 /* Month.swift */,
+				499C0DDA29BF285800574FA7 /* TextViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		49FB007929B719AC00C2AF09 = {
@@ -110,10 +122,9 @@
 			isa = PBXGroup;
 			children = (
 				499C0DB129BA0CFD00574FA7 /* Supporting Files */,
-				49FB009A29B79FBA00C2AF09 /* Zoom.swift */,
 				49FB008529B719AC00C2AF09 /* MyCalendarApp.swift */,
+				499C0DD829BF285800574FA7 /* ViewModels */,
 				499C0DBC29BB2BB400574FA7 /* View */,
-				49FB009329B74CA700C2AF09 /* Month.swift */,
 				499C0DB229BA14FE00574FA7 /* Helpers.swift */,
 				49FB008B29B719AD00C2AF09 /* Preview Content */,
 			);
@@ -209,11 +220,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				49FB008829B719AC00C2AF09 /* MainView.swift in Sources */,
-				49FB009429B74CA700C2AF09 /* Month.swift in Sources */,
 				499C0DB729BB17E300574FA7 /* TextLineView.swift in Sources */,
-				49FB009B29B79FBA00C2AF09 /* Zoom.swift in Sources */,
+				499C0DDE29BF286200574FA7 /* Zoom.swift in Sources */,
 				499C0DB529BA16DC00574FA7 /* ImagePicker.swift in Sources */,
+				499C0DDC29BF285800574FA7 /* TextViewModel.swift in Sources */,
 				499C0DBB29BB181000574FA7 /* FontEditorView.swift in Sources */,
+				499C0DDB29BF285800574FA7 /* Month.swift in Sources */,
 				499C0DB329BA14FE00574FA7 /* Helpers.swift in Sources */,
 				49FB008629B719AC00C2AF09 /* MyCalendarApp.swift in Sources */,
 				499C0DB929BB17FF00574FA7 /* DateEditorView.swift in Sources */,
