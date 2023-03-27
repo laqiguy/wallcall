@@ -33,7 +33,10 @@ struct Month {
             from: start)
         
         array.insert(contentsOf: Array<Date?>(repeating: nil, count: (startComp.weekday! - calendar.firstWeekday + 7) % 7), at: 0)
-        array.append(contentsOf: Array<Date?>(repeating: nil, count: 7 - array.count % 7))
+        let daysAfter = 7 - array.count % 7
+        if daysAfter != 7 {
+            array.append(contentsOf: Array<Date?>(repeating: nil, count: daysAfter))
+        }
         
         let dates = array.chunked(into: 7).map { dates in
             return dates.map { date in

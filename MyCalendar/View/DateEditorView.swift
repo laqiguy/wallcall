@@ -46,17 +46,20 @@ struct DateEditorView: View {
     var body: some View {
         VStack {
             Toggle("Показывать номер недели", isOn: $showWeekNumber)
-            HStack() {
+                .padding()
+            HStack {
                 Picker(selection: $selectedMonth) {
                     ForEach(months.indices, id: \.self) { index in
                         Text(months[index])
                     }
                 } label: { }
+                    .frame(width: 160)
                 Picker(selection: $selectedYear) {
                     ForEach(years.indices, id: \.self) { index in
                         Text(years[index])
                     }
                 } label: { }
+                    .frame(width: 160)
             }
             .onChange(of: selectedMonth, perform: { newValue in
                 let dateString = "\(months[newValue]) \(years[selectedYear])"
@@ -67,8 +70,7 @@ struct DateEditorView: View {
                 date = dateFormatter.date(from: dateString) ?? date
             })
             .pickerStyle(.wheel)
-            .presentationDetents(Set(arrayLiteral: heights))
         }
-        .padding()
+        .presentationDetents(Set(arrayLiteral: heights))
     }
 }
