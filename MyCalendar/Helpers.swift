@@ -49,7 +49,7 @@ let calendar: Calendar = {
 
     return calendar
 }()
-let dateComponents: Set<Calendar.Component> = [.day, .month, .year, .weekday, .weekdayOrdinal]
+let dateComponents: Set<Calendar.Component> = [.day, .month, .year, .weekday, .weekdayOrdinal, .weekOfYear]
 
 let monthFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()

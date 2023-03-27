@@ -13,6 +13,7 @@ struct MainViewModel {
     let current: Date
     var date: Date
     var month: Month
+    var showWeekNumber: Bool = false
     
     var fontScale: Int = 3
     
@@ -78,12 +79,24 @@ struct MainView: View {
                         .onTapGesture {
                             isShowDatePicker = true
                         }
-                    TextLineView(data: viewModel.month.days, textViewModel: $viewModel.textViewModel)
+                    HStack(spacing: 8) {
+                        if viewModel.showWeekNumber {
+                            WeekNumberView(data: " ", textViewModel: $viewModel.textViewModel)
+                        }
+                        TextLineView(data: viewModel.month.days, textViewModel: $viewModel.textViewModel)
+                    }
                     VStack(spacing: 4 * viewModel.textViewModel.scale) {
                         ForEach(viewModel.month.values, id: \.number) { element in
-                            TextLineView(
-                                data: element.values,
-                                textViewModel: $viewModel.textViewModel)
+                            HStack(spacing: 8) {
+                                if viewModel.showWeekNumber {
+                                    WeekNumberView(
+                                        data: element.number,
+                                        textViewModel: $viewModel.textViewModel)
+                                }
+                                TextLineView(
+                                    data: element.values,
+                                    textViewModel: $viewModel.textViewModel)
+                            }
                         }
                     }
                     .contentShape(Rectangle())
@@ -99,7 +112,7 @@ struct MainView: View {
                 FontEditorView(textViewModel: $viewModel.textViewModel, fontValue: fontScaleProxy)
             }
             .sheet(isPresented: $isShowDatePicker) {
-                DateEditorView(current: viewModel.current, date: $viewModel.date)
+                DateEditorView(current: viewModel.current, date: $viewModel.date, showWeekNumber: $viewModel.showWeekNumber)
             }
             .onChange(of: viewModel.date) { newValue in
                 viewModel.updateMonth()

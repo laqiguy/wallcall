@@ -10,7 +10,7 @@ import Foundation
 struct Month {
     
     struct Week {
-        var number: Int
+        var number: String
         var values: [String]
     }
     
@@ -48,9 +48,14 @@ struct Month {
         weekdays.append(first)
         
         let name = monthFormatter.string(from: date).capitalized
-        
         let weeks = dates.enumerated().map { item in
-            return Week(number: monthNumber * 100 + item.offset, values: item.element)
+            let day = Int(item.element.first(where: { $0 != " " })!)
+            var weekNumber = " "
+            if let date = DateComponents(calendar: calendar, year: components.year, month: components.month, day: day).date,
+               let weekDay = calendar.dateComponents(dateComponents, from: date).weekOfYear {
+                weekNumber = "\(weekDay)"
+            }
+            return Week(number: weekNumber, values: item.element)
         }
         
         return Month(

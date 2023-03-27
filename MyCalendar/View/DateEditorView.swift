@@ -10,6 +10,7 @@ import SwiftUI
 struct DateEditorView: View {
     
     @Binding var date: Date
+    @Binding var showWeekNumber: Bool
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -25,7 +26,8 @@ struct DateEditorView: View {
     
     private let heights = PresentationDetent.fraction(0.3)
     
-    init(current: Date, date: Binding<Date>) {
+    init(current: Date, date: Binding<Date>, showWeekNumber: Binding<Bool>) {
+        self._showWeekNumber = showWeekNumber
         self._date = date
         let currentDateComponents = calendar.dateComponents([.year, .month], from: current)
         let currentYear = currentDateComponents.year ?? 2023
@@ -42,27 +44,31 @@ struct DateEditorView: View {
     }
     
     var body: some View {
-        HStack() {
-            Picker(selection: $selectedMonth) {
-                ForEach(months.indices, id: \.self) { index in
-                    Text(months[index])
-                }
-            } label: { }
-            Picker(selection: $selectedYear) {
-                ForEach(years.indices, id: \.self) { index in
-                    Text(years[index])
-                }
-            } label: { }
+        VStack {
+            Toggle("Показывать номер недели", isOn: $showWeekNumber)
+            HStack() {
+                Picker(selection: $selectedMonth) {
+                    ForEach(months.indices, id: \.self) { index in
+                        Text(months[index])
+                    }
+                } label: { }
+                Picker(selection: $selectedYear) {
+                    ForEach(years.indices, id: \.self) { index in
+                        Text(years[index])
+                    }
+                } label: { }
+            }
+            .onChange(of: selectedMonth, perform: { newValue in
+                let dateString = "\(months[newValue]) \(years[selectedYear])"
+                date = dateFormatter.date(from: dateString) ?? date
+            })
+            .onChange(of: selectedYear, perform: { newValue in
+                let dateString = "\(months[selectedMonth]) \(years[newValue])"
+                date = dateFormatter.date(from: dateString) ?? date
+            })
+            .pickerStyle(.wheel)
+            .presentationDetents(Set(arrayLiteral: heights))
         }
-        .onChange(of: selectedMonth, perform: { newValue in
-            let dateString = "\(months[newValue]) \(years[selectedYear])"
-            date = dateFormatter.date(from: dateString) ?? date
-        })
-        .onChange(of: selectedYear, perform: { newValue in
-            let dateString = "\(months[selectedMonth]) \(years[newValue])"
-            date = dateFormatter.date(from: dateString) ?? date
-        })
-        .pickerStyle(.wheel)
-        .presentationDetents(Set(arrayLiteral: heights))
+        .padding()
     }
 }

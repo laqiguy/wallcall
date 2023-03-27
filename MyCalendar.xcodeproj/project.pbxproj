@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4923FEBF29D1D5B20050DFD2 /* WeekNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4923FEBE29D1D5B20050DFD2 /* WeekNumberView.swift */; };
 		499C0DAC29B9F62300574FA7 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 499C0DAB29B9F62300574FA7 /* FirebaseCrashlytics */; };
 		499C0DAF29BA0CF400574FA7 /* CoFoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 499C0DAD29BA0CF400574FA7 /* CoFoSans-Regular.ttf */; };
 		499C0DB029BA0CF400574FA7 /* CoFoRedmadrobot-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 499C0DAE29BA0CF400574FA7 /* CoFoRedmadrobot-Regular.otf */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4923FEBE29D1D5B20050DFD2 /* WeekNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekNumberView.swift; sourceTree = "<group>"; };
 		499C0DAD29BA0CF400574FA7 /* CoFoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CoFoSans-Regular.ttf"; sourceTree = "<group>"; };
 		499C0DAE29BA0CF400574FA7 /* CoFoRedmadrobot-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CoFoRedmadrobot-Regular.otf"; sourceTree = "<group>"; };
 		499C0DB229BA14FE00574FA7 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				499C0DDD29BF286200574FA7 /* Zoom.swift */,
 				499C0DB829BB17FF00574FA7 /* DateEditorView.swift */,
 				499C0DB629BB17E300574FA7 /* TextLineView.swift */,
+				4923FEBE29D1D5B20050DFD2 /* WeekNumberView.swift */,
 				499C0DB429BA16DC00574FA7 /* ImagePicker.swift */,
 			);
 			path = View;
@@ -227,6 +230,7 @@
 				499C0DBB29BB181000574FA7 /* FontEditorView.swift in Sources */,
 				499C0DDB29BF285800574FA7 /* Month.swift in Sources */,
 				499C0DB329BA14FE00574FA7 /* Helpers.swift in Sources */,
+				4923FEBF29D1D5B20050DFD2 /* WeekNumberView.swift in Sources */,
 				49FB008629B719AC00C2AF09 /* MyCalendarApp.swift in Sources */,
 				499C0DB929BB17FF00574FA7 /* DateEditorView.swift in Sources */,
 			);
