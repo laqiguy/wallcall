@@ -15,7 +15,7 @@ struct WeekNumberView: View {
     var body: some View {
         Text(data)
             .font(.custom(textViewModel.font, size: 10 * textViewModel.scale))
-            .foregroundColor(textViewModel.textColor.opacity(0.8))
+            .foregroundColor(textViewModel.textColor)
             .clipped()
             .shadow(color: textViewModel.shadowColor,
                     radius: 1)
