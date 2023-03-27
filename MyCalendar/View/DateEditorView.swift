@@ -47,29 +47,31 @@ struct DateEditorView: View {
         VStack {
             Toggle("Показывать номер недели", isOn: $showWeekNumber)
                 .padding()
-            HStack {
-                Picker(selection: $selectedMonth) {
-                    ForEach(months.indices, id: \.self) { index in
-                        Text(months[index])
-                    }
-                } label: { }
-                    .frame(width: 160)
-                Picker(selection: $selectedYear) {
-                    ForEach(years.indices, id: \.self) { index in
-                        Text(years[index])
-                    }
-                } label: { }
-                    .frame(width: 160)
+            GeometryReader { proxy in
+                HStack(spacing: 0) {
+                    Picker(selection: $selectedMonth) {
+                        ForEach(months.indices, id: \.self) { index in
+                            Text(months[index])
+                        }
+                    } label: { }
+                        .frame(width: proxy.size.width / 2)
+                    Picker(selection: $selectedYear) {
+                        ForEach(years.indices, id: \.self) { index in
+                            Text(years[index])
+                        }
+                    } label: { }
+                        .frame(width: proxy.size.width / 2)
+                }
+                .onChange(of: selectedMonth, perform: { newValue in
+                    let dateString = "\(months[newValue]) \(years[selectedYear])"
+                    date = dateFormatter.date(from: dateString) ?? date
+                })
+                .onChange(of: selectedYear, perform: { newValue in
+                    let dateString = "\(months[selectedMonth]) \(years[newValue])"
+                    date = dateFormatter.date(from: dateString) ?? date
+                })
+                .pickerStyle(.wheel)
             }
-            .onChange(of: selectedMonth, perform: { newValue in
-                let dateString = "\(months[newValue]) \(years[selectedYear])"
-                date = dateFormatter.date(from: dateString) ?? date
-            })
-            .onChange(of: selectedYear, perform: { newValue in
-                let dateString = "\(months[selectedMonth]) \(years[newValue])"
-                date = dateFormatter.date(from: dateString) ?? date
-            })
-            .pickerStyle(.wheel)
         }
         .presentationDetents(Set(arrayLiteral: heights))
     }
