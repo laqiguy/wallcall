@@ -55,12 +55,16 @@ struct DateEditorView: View {
                         }
                     } label: { }
                         .frame(width: proxy.size.width / 2)
+                        .clipped()
+                        .contentShape(Rectangle())
                     Picker(selection: $selectedYear) {
                         ForEach(years.indices, id: \.self) { index in
                             Text(years[index])
                         }
                     } label: { }
                         .frame(width: proxy.size.width / 2)
+                        .clipped()
+                        .contentShape(Rectangle())
                 }
                 .onChange(of: selectedMonth, perform: { newValue in
                     let dateString = "\(months[newValue]) \(years[selectedYear])"
