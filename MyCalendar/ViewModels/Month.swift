@@ -9,63 +9,116 @@ import Foundation
 
 struct Month {
     
+    struct Day {
+        let id: String
+        let date: Date?
+        let value: String
+        
+        init(date: Date?) {
+            guard let date = date else {
+                value = " "
+                id = UUID().uuidString
+                self.date = nil
+                return
+            }
+            
+            let formatter = ISO8601DateFormatter()
+
+            id = formatter.string(from: date)
+            self.date = date
+            self.value = "\(calendar.component(.day, from: date))"
+        }
+    }
+    
     struct Week {
         var number: String
-        var values: [String]
+        var values: [Day]
     }
+    
+    // MARK: - Variables
     
     var id: String
     var name: String
-    var days: [String]
     var values: [Week]
     
-    static func generate(_ date: Date) -> Month {
-        let components = calendar.dateComponents(dateComponents, from: date)
-        let monthNumber = components.month ?? 42
-        
-        let start = date.startOfMonth()
-        let end = date.endOfMonth()
-        
-        var array: [Date?] = datesRange(from: start, to: end)
-        
-        let startComp = calendar.dateComponents(
-            dateComponents,
-            from: start)
-        
-        array.insert(contentsOf: Array<Date?>(repeating: nil, count: (startComp.weekday! - calendar.firstWeekday + 7) % 7), at: 0)
-        let daysAfter = 7 - array.count % 7
-        if daysAfter != 7 {
-            array.append(contentsOf: Array<Date?>(repeating: nil, count: daysAfter))
-        }
-        
-        let dates = array.chunked(into: 7).map { dates in
-            return dates.map { date in
-                guard let date else {
-                    return " "
-                }
-                return "\(calendar.component(.day, from: date))"
-            }
-        }
+    var weekDaysNames: [String] {
         var weekdays = calendar.veryShortWeekdaySymbols
         let first = weekdays.remove(at: 0)
         weekdays.append(first)
+        return weekdays
+    }
+    
+    // MARK: - Public methods
+    
+    mutating func update(_ date: Date) {
+        self.name = Month.getName(from: date)
+        self.values = Month.getWeeks(from: date)
+    }
+    
+    
+    static func generate(for date: Date) -> Month {
+        return Month(id: UUID().uuidString, name: getName(from: date), values: getWeeks(from: date))
+    }
+    
+    // MARK: - Private methods
+    
+    static private func getName(from date: Date) -> String {
+        return monthFormatter.string(from: date).capitalized
+    }
+    
+    static private func getMonthDates(from date: Date) -> [Date] {
+        let start = date.startOfMonth()
+        let end = date.endOfMonth()
         
-        let name = monthFormatter.string(from: date).capitalized
-        let weeks = dates.enumerated().map { item in
-            let day = Int(item.element.first(where: { $0 != " " })!)
-            var weekNumber = " "
-            if let date = DateComponents(calendar: calendar, year: components.year, month: components.month, day: day).date,
-               let weekDay = calendar.dateComponents(dateComponents, from: date).weekOfYear {
-                weekNumber = "\(weekDay)"
-            }
-            return Week(number: weekNumber, values: item.element)
+        return datesRange(from: start, to: end)
+    }
+    
+    static private func makeFullWeeks(array: [Date]) -> [Date?] {
+        guard let start = array.first else {
+            fatalError("Empty Dates Array")
         }
         
-        return Month(
-            id: "\(components.month!)+\(components.year!)",
-            name: name,
-            days: weekdays,
-            values: weeks
-        )
+        var result: [Date?] = array
+        
+        let startComponents = calendar.dateComponents(
+            dateComponents,
+            from: start)
+        
+        result.insert(
+            contentsOf:
+                Array<Date?>(
+                    repeating: nil,
+                    count: (startComponents.weekday! - calendar.firstWeekday + 7) % 7),
+            at: 0)
+        let daysAfterCount = 7 - result.count % 7
+        if daysAfterCount != 7 {
+            result.append(contentsOf: Array<Date?>(repeating: nil, count: daysAfterCount))
+        }
+        
+        return result
+    }
+    
+    static private func makeDays(array: [Date]) -> [Day] {
+        let fullWeeks = makeFullWeeks(array: array)
+        return fullWeeks.map { Day(date: $0) }
+    }
+    
+    static private func makeWeeks(days: [Day]) -> [Week] {
+        let weeks = days.chunked(into: 7)
+        
+        return weeks.enumerated().map { week in
+            guard let date = week.element.first(where: { $0.value != " " })!.date,
+                  let weekNumber = calendar.dateComponents(dateComponents, from: date).weekOfYear else {
+                fatalError("empty week!")
+            }
+            return Week(number: "\(weekNumber)", values: week.element)
+        }
+    }
+    
+    static private func getWeeks(from date: Date) -> [Week] {
+        let monthDates: [Date] = getMonthDates(from: date)
+        let days = makeDays(array: monthDates)
+        
+        return makeWeeks(days: days)
     }
 }

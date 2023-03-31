@@ -20,11 +20,11 @@ struct MainViewModel {
     init(date: Date) {
         self.current = date
         self.date = date
-        self.month = Month.generate(date)
+        self.month = Month.generate(for: date)
     }
     
     mutating func updateMonth() {
-        self.month = Month.generate(date)
+        month.update(date)
     }
 }
 
@@ -83,7 +83,7 @@ struct MainView: View {
                         if viewModel.showWeekNumber {
                             WeekNumberView(data: " ", textViewModel: $viewModel.textViewModel)
                         }
-                        TextLineView(data: viewModel.month.days, textViewModel: $viewModel.textViewModel)
+                        WeekHeaderView(data: viewModel.month.weekDaysNames, textViewModel: $viewModel.textViewModel)
                     }
                     VStack(spacing: 4 * viewModel.textViewModel.scale) {
                         ForEach(viewModel.month.values, id: \.number) { element in
@@ -93,7 +93,7 @@ struct MainView: View {
                                         data: element.number,
                                         textViewModel: $viewModel.textViewModel)
                                 }
-                                TextLineView(
+                                WeekView(
                                     data: element.values,
                                     textViewModel: $viewModel.textViewModel)
                             }

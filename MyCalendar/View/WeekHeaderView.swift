@@ -1,21 +1,21 @@
 //
-//  TextLineView.swift
+//  WeekHeaderView.swift
 //  MyCalendar
 //
-//  Created by Aleksei Tiurnin on 10.03.2023.
+//  Created by Aleksei Tiurnin on 29.03.2023.
 //
 
 import SwiftUI
 
-struct TextLineView: View {
+struct WeekHeaderView: View {
     
     var data: [String]
     @Binding var textViewModel: TextViewModel
     
     var body: some View {
         HStack(alignment: .center, spacing: 4 * textViewModel.scale) {
-            ForEach(data, id: \.self) { text in
-                Text(text)
+            ForEach(data, id: \.self) { value in
+                Text(value)
                     .font(.custom(textViewModel.font, size: 14 * textViewModel.scale))
                     .foregroundColor(textViewModel.textColor)
                     .clipped()
