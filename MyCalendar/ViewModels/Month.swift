@@ -67,10 +67,7 @@ struct Month {
     }
     
     static private func getMonthDates(from date: Date) -> [Date] {
-        let start = date.startOfMonth()
-        let end = date.endOfMonth()
-        
-        return datesRange(from: start, to: end)
+        return datesRange(from: date.startOfMonth(), to: date.endOfMonth())
     }
     
     static private func makeFullWeeks(array: [Date]) -> [Date?] {

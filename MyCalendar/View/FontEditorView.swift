@@ -46,7 +46,7 @@ struct FontEditorView: View {
                         }
                     }
                 }
-                Picker("Please choose a color", selection: $textViewModel.family) {
+                Picker("Выбери шрифт", selection: $textViewModel.family) {
                     ForEach(UIFont.familyNames, id: \.self) {
                         Text($0)
                     }
