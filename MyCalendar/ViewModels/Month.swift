@@ -11,22 +11,17 @@ struct Month {
     
     struct Day {
         let id: String
-        let date: Date?
+        let date: Date
         let value: String
+        let isCurrentMonth: Bool
         
-        init(date: Date?) {
-            guard let date = date else {
-                value = " "
-                id = UUID().uuidString
-                self.date = nil
-                return
-            }
-            
+        init(date: Date, isCurrentMonth: Bool) {
             let formatter = ISO8601DateFormatter()
 
             id = formatter.string(from: date)
             self.date = date
             self.value = "\(calendar.component(.day, from: date))"
+            self.isCurrentMonth = isCurrentMonth
         }
     }
     
@@ -67,54 +62,59 @@ struct Month {
     }
     
     static private func getMonthDates(from date: Date) -> [Date] {
-        return datesRange(from: date.startOfMonth(), to: date.endOfMonth())
-    }
-    
-    static private func makeFullWeeks(array: [Date]) -> [Date?] {
-        guard let start = array.first else {
-            fatalError("Empty Dates Array")
-        }
+        let start = date.startOfMonth()
+        let end = date.endOfMonth()
         
-        var result: [Date?] = array
+        var result = datesRange(from: start, to: end)
         
         let startComponents = calendar.dateComponents(
             dateComponents,
             from: start)
         
+        let daysBefore = (startComponents.weekday! - calendar.firstWeekday + 7) % 7
+        let weekStart = calendar.date(byAdding: .day, value: -daysBefore, to: start)!
         result.insert(
-            contentsOf:
-                Array<Date?>(
-                    repeating: nil,
-                    count: (startComponents.weekday! - calendar.firstWeekday + 7) % 7),
+            contentsOf: datesRange(
+                from: weekStart,
+                to: calendar.date(byAdding: .day, value: -1, to: start)!),
             at: 0)
-        let daysAfterCount = 7 - result.count % 7
-        if daysAfterCount != 7 {
-            result.append(contentsOf: Array<Date?>(repeating: nil, count: daysAfterCount))
+        
+        let daysAfter = 7 - result.count % 7
+        if daysAfter != 7 {
+            let endComponents = calendar.dateComponents(
+                dateComponents,
+                from: end)
+            let weekEnd = calendar.date(byAdding: .day, value: daysAfter, to: end)!
+            result.append(
+                contentsOf: datesRange(
+                    from: calendar.date(byAdding: .day, value: 1, to: end)!,
+                    to: weekEnd))
         }
         
         return result
     }
     
-    static private func makeDays(array: [Date]) -> [Day] {
-        let fullWeeks = makeFullWeeks(array: array)
-        return fullWeeks.map { Day(date: $0) }
+    static private func makeDays(array: [Date], for date: Date) -> [Day] {
+        let currentMonth = calendar.component(.month, from: date)
+        return array.map { element in
+            return Day(date: element, isCurrentMonth: currentMonth == calendar.component(.month, from: element))
+        }
     }
     
     static private func makeWeeks(days: [Day]) -> [Week] {
         let weeks = days.chunked(into: 7)
         
         return weeks.enumerated().map { week in
-            guard let date = week.element.first(where: { $0.value != " " })!.date,
-                  let weekNumber = calendar.dateComponents(dateComponents, from: date).weekOfYear else {
-                fatalError("empty week!")
-            }
+            let date = week.element.first!.date
+            let weekNumber = calendar.dateComponents(dateComponents, from: date).weekOfYear!
             return Week(number: "\(weekNumber)", values: week.element)
         }
     }
     
+    // TODO: Добавить опциию отображения дней соседних месяцев
     static private func getWeeks(from date: Date) -> [Week] {
         let monthDates: [Date] = getMonthDates(from: date)
-        let days = makeDays(array: monthDates)
+        let days = makeDays(array: monthDates, for: date)
         
         return makeWeeks(days: days)
     }

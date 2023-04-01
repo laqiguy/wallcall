@@ -17,7 +17,7 @@ struct WeekView: View {
             ForEach(data, id: \.id) { model in
                 Text(model.value)
                     .font(.custom(textViewModel.font, size: 14 * textViewModel.scale))
-                    .foregroundColor(textViewModel.textColor)
+                    .foregroundColor(textViewModel.textColor.opacity(model.isCurrentMonth ? 1.0 : 0.6))
                     .clipped()
                     .shadow(color: textViewModel.shadowColor,
                             radius: 1)
