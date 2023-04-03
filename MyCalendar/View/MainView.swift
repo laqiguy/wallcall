@@ -52,7 +52,7 @@ struct MainView: View {
     @State var isShowPhotoPicker: Bool = false
     @State var isShowFontPicker: Bool = false
     @State var isShowDatePicker: Bool = false
-        
+    
     init() {
         self._viewModel = .init(initialValue: MainViewModel(date: Date()))
     }
@@ -64,18 +64,26 @@ struct MainView: View {
                     viewModel.image
                         .resizable()
                         .scaledToFill()
-                        .modifier(ImageZoomModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
+                        .modifier(
+                            ImageZoomModifier(
+                                contentSize: CGSize(
+                                    width: proxy.size.width,
+                                    height: proxy.size.height)))
                         .onTapGesture {
                             self.isShowPhotoPicker.toggle()
                         }
                 }
                 VStack(alignment: .center, spacing: 4 * viewModel.textViewModel.scale) {
                     Text(viewModel.month.name)
-                        .font(.custom(viewModel.textViewModel.font, size: 24 * viewModel.textViewModel.scale))
+                        .font(
+                            .custom(
+                                viewModel.textViewModel.font,
+                                size: 24 * viewModel.textViewModel.scale))
                         .foregroundColor(viewModel.textViewModel.textColor)
                         .clipped()
-                        .shadow(color: viewModel.textViewModel.shadowColor,
-                                radius: 2)
+                        .shadow(
+                            color: viewModel.textViewModel.shadowColor,
+                            radius: 2)
                         .onTapGesture {
                             isShowDatePicker = true
                         }
@@ -83,7 +91,9 @@ struct MainView: View {
                         if viewModel.showWeekNumber {
                             WeekNumberView(data: " ", textViewModel: $viewModel.textViewModel)
                         }
-                        WeekHeaderView(data: viewModel.month.weekDaysNames, textViewModel: $viewModel.textViewModel)
+                        WeekHeaderView(
+                            data: viewModel.month.weekDaysNames,
+                            textViewModel: $viewModel.textViewModel)
                     }
                     VStack(spacing: 4 * viewModel.textViewModel.scale) {
                         ForEach(viewModel.month.values, id: \.number) { element in
@@ -109,10 +119,15 @@ struct MainView: View {
                 ImagePicker(image: self.$viewModel.image)
             }
             .sheet(isPresented: $isShowFontPicker) {
-                FontEditorView(textViewModel: $viewModel.textViewModel, fontValue: fontScaleProxy)
+                FontEditorView(
+                    textViewModel: $viewModel.textViewModel,
+                    fontValue: fontScaleProxy)
             }
             .sheet(isPresented: $isShowDatePicker) {
-                DateEditorView(current: viewModel.current, date: $viewModel.date, showWeekNumber: $viewModel.showWeekNumber)
+                DateEditorView(
+                    current: viewModel.current,
+                    date: $viewModel.date,
+                    showWeekNumber: $viewModel.showWeekNumber)
             }
             .onChange(of: viewModel.date) { newValue in
                 viewModel.updateMonth()

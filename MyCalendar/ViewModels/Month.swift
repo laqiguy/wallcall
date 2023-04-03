@@ -52,7 +52,10 @@ struct Month {
     
     
     static func generate(for date: Date) -> Month {
-        return Month(id: UUID().uuidString, name: getName(from: date), values: getWeeks(from: date))
+        return Month(
+            id: UUID().uuidString,
+            name: getName(from: date),
+            values: getWeeks(from: date))
     }
     
     // MARK: - Private methods
@@ -81,9 +84,6 @@ struct Month {
         
         let daysAfter = 7 - result.count % 7
         if daysAfter != 7 {
-            let endComponents = calendar.dateComponents(
-                dateComponents,
-                from: end)
             let weekEnd = calendar.date(byAdding: .day, value: daysAfter, to: end)!
             result.append(
                 contentsOf: datesRange(
@@ -97,18 +97,19 @@ struct Month {
     static private func makeDays(array: [Date], for date: Date) -> [Day] {
         let currentMonth = calendar.component(.month, from: date)
         return array.map { element in
-            return Day(date: element, isCurrentMonth: currentMonth == calendar.component(.month, from: element))
+            return Day(
+                date: element,
+                isCurrentMonth: currentMonth == calendar.component(.month, from: element))
         }
     }
     
     static private func makeWeeks(days: [Day]) -> [Week] {
-        let weeks = days.chunked(into: 7)
-        
-        return weeks.enumerated().map { week in
-            let date = week.element.first!.date
-            let weekNumber = calendar.dateComponents(dateComponents, from: date).weekOfYear!
-            return Week(number: "\(weekNumber)", values: week.element)
-        }
+        return days.chunked(into: 7)
+            .map { week in
+                let date = week.first!.date
+                let weekNumber = calendar.dateComponents(dateComponents, from: date).weekOfYear!
+                return Week(number: "\(weekNumber)", values: week)
+            }
     }
     
     // TODO: Добавить опциию отображения дней соседних месяцев
