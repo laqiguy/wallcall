@@ -132,7 +132,8 @@
 				499C0DBC29BB2BB400574FA7 /* View */,
 				499C0DD829BF285800574FA7 /* ViewModels */,
 			);
-			path = MyCalendar;
+			name = MyCalendar;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		49FB008B29B719AD00C2AF09 /* Preview Content */ = {
@@ -361,12 +362,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"MyCalendar/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Source/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 42LRQS6X44;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "MyCalendar/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Source/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WallCal;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -401,12 +402,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Redmadrobot OOO";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"MyCalendar/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Source/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 42LRQS6X44;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "MyCalendar/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Source/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WallCal;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
