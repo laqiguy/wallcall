@@ -14,7 +14,7 @@ let project = Project(
                 "Source/**"
             ],
             resources: [
-                "Supporting Files/Resources/**"],
+                "Source/Supporting Files/Resources/**"],
             copyFiles: [
                 .resources(name: "Supporting Files/Resources/GoogleService-Info.plist", files: []),
                 .resources(name: "Supporting Files/Resources/Launch Screen.storyboard", files: [])],
