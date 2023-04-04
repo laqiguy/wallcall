@@ -14,14 +14,16 @@ struct Month {
         let date: Date
         let value: String
         let isCurrentMonth: Bool
+        let isDayOff: Bool
         
-        init(date: Date, isCurrentMonth: Bool) {
+        init(date: Date, isCurrentMonth: Bool, weekDayNumber: Int) {
             let formatter = ISO8601DateFormatter()
 
             id = formatter.string(from: date)
             self.date = date
             self.value = "\(calendar.component(.day, from: date))"
             self.isCurrentMonth = isCurrentMonth
+            self.isDayOff = weekDayNumber == 1 || weekDayNumber == 7
         }
     }
     
@@ -97,9 +99,12 @@ struct Month {
     static private func makeDays(array: [Date], for date: Date) -> [Day] {
         let currentMonth = calendar.component(.month, from: date)
         return array.map { element in
+            let weekDayNumber = calendar.component(.weekday, from: element)
             return Day(
                 date: element,
-                isCurrentMonth: currentMonth == calendar.component(.month, from: element))
+                isCurrentMonth: currentMonth == calendar.component(.month, from: element),
+                weekDayNumber: weekDayNumber
+            )
         }
     }
     
@@ -112,7 +117,6 @@ struct Month {
             }
     }
     
-    // TODO: Добавить опциию отображения дней соседних месяцев
     static private func getWeeks(from date: Date) -> [Week] {
         let monthDates: [Date] = getMonthDates(from: date)
         let days = makeDays(array: monthDates, for: date)
