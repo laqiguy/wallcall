@@ -134,6 +134,9 @@ struct MainView: View {
             }
             .ignoresSafeArea()
             .statusBar(hidden: true)
+            .task {
+                <#code#>
+            }
         }
     }
 }

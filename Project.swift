@@ -19,6 +19,7 @@ let project = Project(
                 .resources(name: "Supporting Files/Resources/GoogleService-Info.plist", files: []),
                 .resources(name: "Supporting Files/Resources/Launch Screen.storyboard", files: [])],
             dependencies: [
+                .external(name: "Apexy"),
                 /* Target dependencies can be defined here */
                 /* .framework(path: "framework") */
             ],
