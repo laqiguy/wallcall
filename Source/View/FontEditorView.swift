@@ -21,31 +21,11 @@ struct FontEditorView: View {
         self.fontValue = fontValue
     }
     
-    @Environment(\.colorScheme) var colorScheme
-    func getSelectionColor(for color: Color) -> Color {
-        let accent: Color = colorScheme == .dark ? .white : .black
-        return textViewModel.textColor == color ? accent : Color.gray.opacity(0.5)
-    }
-    
     var body: some View {
         VStack(spacing: 16) {
             HStack {
-                VStack {
-                    ForEach(textViewModel.colors, id: \.self) { color in
-                        Button(action: {
-                            textViewModel.textColor = color
-                            textViewModel.shadowColor = color == .black ? .white : .black
-                        }) {
-                            Circle()
-                                .fill(color)
-                                .frame(width: 40, height: 40)
-                                .overlay(
-                                    Circle()
-                                        .stroke(getSelectionColor(for: color), lineWidth: 3)
-                                )
-                        }
-                    }
-                }
+                ColorSelectorView(colors: textViewModel.colors, color: $textViewModel.textColor)
+                ColorSelectorView(colors: textViewModel.colors, color: $textViewModel.dayoffColor)
                 Picker("Выбери шрифт", selection: $textViewModel.family) {
                     ForEach(UIFont.familyNames, id: \.self) {
                         Text($0)
@@ -68,6 +48,9 @@ struct FontEditorView: View {
         .onChange(of: textViewModel.family, perform: { newValue in
             textViewModel.family = newValue
             textViewModel.font = UIFont.fontNames(forFamilyName: newValue)[0]
+        })
+        .onChange(of: textViewModel.textColor, perform: { newValue in
+            textViewModel.shadowColor = newValue == .black ? .white : .black
         })
         .padding()
         .presentationDetents(Set(arrayLiteral: heights))

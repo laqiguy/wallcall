@@ -14,6 +14,7 @@ extension Color {
 struct TextViewModel {
     var colors: [Color] = [.white, .black, .redMadColor]
     var textColor: Color = .white
+    var dayoffColor: Color = .red
     var shadowColor: Color = .black
     var isWhite: Bool = true
     var family: String = "CoFo Redmadrobot"
