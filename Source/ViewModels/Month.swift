@@ -16,14 +16,14 @@ struct Month {
         let isCurrentMonth: Bool
         let isDayOff: Bool
         
-        init(date: Date, isCurrentMonth: Bool, weekDayNumber: Int) {
+        init(date: Date, isCurrentMonth: Bool, isDayOff: Bool) {
             let formatter = ISO8601DateFormatter()
 
             id = formatter.string(from: date)
             self.date = date
             self.value = "\(calendar.component(.day, from: date))"
             self.isCurrentMonth = isCurrentMonth
-            self.isDayOff = weekDayNumber == 1 || weekDayNumber == 7
+            self.isDayOff = isDayOff
         }
     }
     
@@ -47,17 +47,21 @@ struct Month {
     
     // MARK: - Public methods
     
-    mutating func update(_ date: Date) {
+    mutating func update(
+        _ date: Date,
+        businessCalendar: BusinessCalendar? = nil) {
         self.name = Month.getName(from: date)
-        self.values = Month.getWeeks(from: date)
+        self.values = Month.getWeeks(from: date, businessCalendar: businessCalendar)
     }
     
     
-    static func generate(for date: Date) -> Month {
+    static func generate(
+        for date: Date,
+        businessCalendar: BusinessCalendar? = nil) -> Month {
         return Month(
             id: UUID().uuidString,
             name: getName(from: date),
-            values: getWeeks(from: date))
+            values: getWeeks(from: date, businessCalendar: businessCalendar))
     }
     
     // MARK: - Private methods
@@ -96,14 +100,19 @@ struct Month {
         return result
     }
     
-    static private func makeDays(array: [Date], for date: Date) -> [Day] {
+    static private func makeDays(
+        array: [Date],
+        for date: Date,
+        businessCalendar: BusinessCalendar? = nil) -> [Day] {
         let currentMonth = calendar.component(.month, from: date)
         return array.map { element in
             let weekDayNumber = calendar.component(.weekday, from: element)
+            let isDayOff = weekDayNumber == 1 || weekDayNumber == 7 ||
+            businessCalendar?.holidays.first(where: { $0.sameDay(as: element) }) != nil
             return Day(
                 date: element,
                 isCurrentMonth: currentMonth == calendar.component(.month, from: element),
-                weekDayNumber: weekDayNumber
+                isDayOff: isDayOff
             )
         }
     }
@@ -117,9 +126,11 @@ struct Month {
             }
     }
     
-    static private func getWeeks(from date: Date) -> [Week] {
+    static private func getWeeks(
+        from date: Date,
+        businessCalendar: BusinessCalendar? = nil) -> [Week] {
         let monthDates: [Date] = getMonthDates(from: date)
-        let days = makeDays(array: monthDates, for: date)
+        let days = makeDays(array: monthDates, for: date, businessCalendar: businessCalendar)
         
         return makeWeeks(days: days)
     }

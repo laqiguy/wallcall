@@ -7,6 +7,29 @@
 
 import SwiftUI
 
+struct BusinessCalendar: Decodable {
+    let holidays: [Date]
+    let preholidays: [Date]
+}
+
+class BusinessCalendarManager {
+    var businessCalendars: [Int: BusinessCalendar] = [:]
+
+    func load(for date: Date) async {
+        do {
+            let year = calendar.component(.year, from: date)
+            let calendar = try await client.request(BusinessCalendarEndpoint(year: year))
+            businessCalendars[year] = calendar
+        } catch {
+        }
+    }
+    
+    func getBusinessCalendar(for date: Date) -> BusinessCalendar? {
+        let year = calendar.component(.year, from: date)
+        return businessCalendars[year]
+    }
+}
+
 struct MainViewModel {
     var textViewModel: TextViewModel = TextViewModel()
     var image: Image = Image("1")
@@ -14,17 +37,24 @@ struct MainViewModel {
     var date: Date
     var month: Month
     var showWeekNumber: Bool = false
+    let manager = BusinessCalendarManager()
     
     var fontScale: Int = 3
+    
+    var businessCalendars: [Int: BusinessCalendar] = [:]
     
     init(date: Date) {
         self.current = date
         self.date = date
-        self.month = Month.generate(for: date)
+        self.month = Month.generate(for: date, businessCalendar: manager.getBusinessCalendar(for: date))
     }
     
     mutating func updateMonth() {
-        month.update(date)
+        month.update(date, businessCalendar: manager.getBusinessCalendar(for: date))
+    }
+    
+    func load() async {
+        await manager.load(for: date)
     }
 }
 
@@ -135,7 +165,7 @@ struct MainView: View {
             .ignoresSafeArea()
             .statusBar(hidden: true)
             .task {
-                <#code#>
+                await viewModel.load()
             }
         }
     }
