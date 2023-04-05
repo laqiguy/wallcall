@@ -17,15 +17,22 @@ let client: Client = {
     return client
 }()
 
+let bcDateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "YYYY-MM-dd"
+    return formatter
+}()
+
 let decoder: JSONDecoder = {
    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .custom({ decoder in
-        let container = try decoder.singleValueContainer()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY-MM-dd"
-        return formatter.date(from: try container.decode(String.self))!
-    })
+    decoder.dateDecodingStrategy = .formatted(bcDateFormatter)
     return decoder
+}()
+
+let encoder: JSONEncoder = {
+    let encoder = JSONEncoder()
+    encoder.dateEncodingStrategy = .formatted(bcDateFormatter)
+     return encoder
 }()
 
 struct BusinessCalendarEndpoint: Endpoint, URLRequestBuildable {

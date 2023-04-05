@@ -7,26 +7,41 @@
 
 import SwiftUI
 
-struct BusinessCalendar: Decodable {
+struct BusinessCalendar: Codable {
     let holidays: [Date]
     let preholidays: [Date]
 }
 
 class BusinessCalendarManager {
     var businessCalendars: [Int: BusinessCalendar] = [:]
+    let storage: UserDefaults = UserDefaults.standard
 
     func load(for date: Date) async {
         do {
             let year = calendar.component(.year, from: date)
             let calendar = try await client.request(BusinessCalendarEndpoint(year: year))
             businessCalendars[year] = calendar
+            save(calendar: calendar, for: year)
         } catch {
         }
     }
     
     func getBusinessCalendar(for date: Date) -> BusinessCalendar? {
         let year = calendar.component(.year, from: date)
-        return businessCalendars[year]
+        return businessCalendars[year] ?? loadCalendar(for: year)
+    }
+    
+    func save(calendar: BusinessCalendar, for year: Int) {
+        let data = try? encoder.encode(calendar)
+        storage.set(data, forKey: "\(year)")
+    }
+    
+    func loadCalendar(for year: Int) -> BusinessCalendar? {
+        guard let data = storage.data(forKey: "\(year)"),
+              let calendar = try? decoder.decode(BusinessCalendar.self, from: data) else {
+            return nil
+        }
+        return calendar
     }
 }
 
