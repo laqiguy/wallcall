@@ -65,18 +65,23 @@ class BusinessCalendarManager {
     private let storage: UserDefaults = UserDefaults.standard
     
     func load(for date: Date) async {
-        do {
-            let year = calendar.component(.year, from: date)
-            let calendar = try await client.getCalendar(for: year)
-            businessCalendars[year] = calendar
-            save(calendar: calendar, for: year)
-        } catch {
+        let year = calendar.component(.year, from: date)
+        if loadCalendar(for: year) == nil {
+            do {
+                let calendar = try await client.getCalendar(for: year)
+                businessCalendars[year] = calendar
+                save(calendar: calendar, for: year)
+            } catch {
+            }
         }
     }
     
     func getBusinessCalendar(for date: Date) -> BusinessCalendar? {
         let year = calendar.component(.year, from: date)
-        return businessCalendars[year] ?? loadCalendar(for: year)
+        if businessCalendars[year] == nil {
+            businessCalendars[year] = loadCalendar(for: year)
+        }
+        return businessCalendars[year]
     }
     
     func save(calendar: BusinessCalendar, for year: Int) {
