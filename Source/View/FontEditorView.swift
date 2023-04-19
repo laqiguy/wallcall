@@ -9,13 +9,15 @@ import SwiftUI
 
 struct FontEditorView: View {
     @Binding var textViewModel: TextViewModel
+    @Binding var isBlurred: Bool
     @State var selectedColor: Int
     var fontValue: Binding<Double>
     
-    private let heights = PresentationDetent.height(280)
+    private let heights = PresentationDetent.height(320)
         
-    init(textViewModel: Binding<TextViewModel>, fontValue: Binding<Double>) {
+    init(textViewModel: Binding<TextViewModel>, isBlurred: Binding<Bool>, fontValue: Binding<Double>) {
         self._textViewModel = textViewModel
+        self._isBlurred = isBlurred
         self._selectedColor = .init(
             initialValue: textViewModel.wrappedValue.colors.firstIndex(of: textViewModel.wrappedValue.textColor) ?? 0)
         self.fontValue = fontValue
@@ -23,6 +25,8 @@ struct FontEditorView: View {
     
     var body: some View {
         VStack(spacing: 16) {
+            Toggle("Блюр", isOn: $isBlurred)
+                .padding()
             HStack {
                 ColorSelectorView(colors: textViewModel.colors, color: $textViewModel.textColor)
                 ColorSelectorView(colors: textViewModel.colors, color: $textViewModel.dayoffColor)
@@ -43,6 +47,8 @@ struct FontEditorView: View {
                             Text(name).font(.custom(name, size: 14 * textViewModel.scale))
                         }
                 }
+            } else {
+                Spacer(minLength: 35)
             }
         }
         .onChange(of: textViewModel.family, perform: { newValue in

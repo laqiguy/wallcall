@@ -14,6 +14,7 @@ struct MainViewModel {
     var date: Date
     var month: Month
     var showWeekNumber: Bool = false
+    var isBlurred: Bool = false
     let manager = BusinessCalendarManager()
     
     var fontScale: Int = 3
@@ -65,85 +66,86 @@ struct MainView: View {
     }
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                GeometryReader { proxy in
-                    viewModel.image
-                        .resizable()
-                        .scaledToFill()
-                        .modifier(
-                            ImageZoomModifier(
-                                contentSize: CGSize(
-                                    width: proxy.size.width,
-                                    height: proxy.size.height)))
-                        .onTapGesture {
-                            self.isShowPhotoPicker.toggle()
-                        }
-                }
-                VStack(alignment: .center, spacing: 4 * viewModel.textViewModel.scale) {
-                    Text(viewModel.month.name)
-                        .font(
-                            .custom(
-                                viewModel.textViewModel.font,
-                                size: 24 * viewModel.textViewModel.scale))
-                        .foregroundColor(viewModel.textViewModel.textColor)
-                        .clipped()
-                        .shadow(
-                            color: viewModel.textViewModel.shadowColor,
-                            radius: 2)
-                        .onTapGesture {
-                            isShowDatePicker = true
-                        }
-                    HStack(spacing: 8) {
-                        if viewModel.showWeekNumber {
-                            WeekNumberView(data: " ", textViewModel: $viewModel.textViewModel)
-                        }
-                        WeekHeaderView(
-                            data: viewModel.month.weekDaysNames,
-                            textViewModel: $viewModel.textViewModel)
+        ZStack {
+            GeometryReader { proxy in
+                viewModel.image
+                    .resizable()
+                    .scaledToFill()
+                    .modifier(
+                        ImageZoomModifier(
+                            contentSize: CGSize(
+                                width: proxy.size.width,
+                                height: proxy.size.height)))
+                    .blur(radius: viewModel.isBlurred ? 5 : 0)
+                    .onTapGesture {
+                        self.isShowPhotoPicker.toggle()
                     }
-                    VStack(spacing: 4 * viewModel.textViewModel.scale) {
-                        ForEach(viewModel.month.values, id: \.number) { element in
-                            HStack(spacing: 8) {
-                                if viewModel.showWeekNumber {
-                                    WeekNumberView(
-                                        data: element.number,
-                                        textViewModel: $viewModel.textViewModel)
-                                }
-                                WeekView(
-                                    data: element.values,
+            }
+            .padding(EdgeInsets(top: -10, leading: -10, bottom: -10, trailing: -10))
+            VStack(alignment: .center, spacing: 4 * viewModel.textViewModel.scale) {
+                Text(viewModel.month.name)
+                    .font(
+                        .custom(
+                            viewModel.textViewModel.font,
+                            size: 24 * viewModel.textViewModel.scale))
+                    .foregroundColor(viewModel.textViewModel.textColor)
+                    .clipped()
+                    .shadow(
+                        color: viewModel.textViewModel.shadowColor,
+                        radius: 2)
+                    .onTapGesture {
+                        isShowDatePicker = true
+                    }
+                HStack(spacing: 8) {
+                    if viewModel.showWeekNumber {
+                        WeekNumberView(data: " ", textViewModel: $viewModel.textViewModel)
+                    }
+                    WeekHeaderView(
+                        data: viewModel.month.weekDaysNames,
+                        textViewModel: $viewModel.textViewModel)
+                }
+                VStack(spacing: 4 * viewModel.textViewModel.scale) {
+                    ForEach(viewModel.month.values, id: \.number) { element in
+                        HStack(spacing: 8) {
+                            if viewModel.showWeekNumber {
+                                WeekNumberView(
+                                    data: element.number,
                                     textViewModel: $viewModel.textViewModel)
                             }
+                            WeekView(
+                                data: element.values,
+                                textViewModel: $viewModel.textViewModel)
                         }
                     }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        isShowFontPicker.toggle()
-                    }
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    isShowFontPicker.toggle()
                 }
             }
-            .sheet(isPresented: $isShowPhotoPicker) {
-                ImagePicker(image: self.$viewModel.image)
-            }
-            .sheet(isPresented: $isShowFontPicker) {
-                FontEditorView(
-                    textViewModel: $viewModel.textViewModel,
-                    fontValue: fontScaleProxy)
-            }
-            .sheet(isPresented: $isShowDatePicker) {
-                DateEditorView(
-                    current: viewModel.current,
-                    date: $viewModel.date,
-                    showWeekNumber: $viewModel.showWeekNumber)
-            }
-            .onChange(of: viewModel.date) { newValue in
-                viewModel.updateMonth()
-            }
-            .ignoresSafeArea()
-            .statusBar(hidden: true)
-            .task {
-                await viewModel.load()
-            }
+        }
+        .sheet(isPresented: $isShowPhotoPicker) {
+            ImagePicker(image: self.$viewModel.image)
+        }
+        .sheet(isPresented: $isShowFontPicker) {
+            FontEditorView(
+                textViewModel: $viewModel.textViewModel,
+                isBlurred: $viewModel.isBlurred,
+                fontValue: fontScaleProxy)
+        }
+        .sheet(isPresented: $isShowDatePicker) {
+            DateEditorView(
+                current: viewModel.current,
+                date: $viewModel.date,
+                showWeekNumber: $viewModel.showWeekNumber)
+        }
+        .onChange(of: viewModel.date) { newValue in
+            viewModel.updateMonth()
+        }
+        .ignoresSafeArea()
+        .statusBar(hidden: true)
+        .task {
+            await viewModel.load()
         }
     }
 }
