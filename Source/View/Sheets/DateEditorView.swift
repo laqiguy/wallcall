@@ -77,6 +77,7 @@ struct DateEditorView: View {
                 .pickerStyle(.wheel)
             }
         }
+        .presentationDragIndicator(.visible)
         .presentationDetents(Set(arrayLiteral: heights))
     }
 }

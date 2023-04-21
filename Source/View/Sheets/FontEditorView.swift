@@ -59,6 +59,7 @@ struct FontEditorView: View {
             textViewModel.shadowColor = newValue == .black ? .white : .black
         })
         .padding()
+        .presentationDragIndicator(.visible)
         .presentationDetents(Set(arrayLiteral: heights))
     }
 }
