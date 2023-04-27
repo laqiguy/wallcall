@@ -13,7 +13,7 @@ struct FontEditorView: View {
     @State var selectedColor: Int
     var fontValue: Binding<Double>
     
-    private let heights = PresentationDetent.height(320)
+    private let heights = PresentationDetent.height(288)
         
     init(textViewModel: Binding<TextViewModel>, isBlurred: Binding<Bool>, fontValue: Binding<Double>) {
         self._textViewModel = textViewModel
@@ -24,9 +24,9 @@ struct FontEditorView: View {
     }
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 8) {
             Toggle("Блюр", isOn: $isBlurred)
-                .padding()
+                .frame(height: 24)
             HStack {
                 ColorSelectorView(colors: textViewModel.colors, color: $textViewModel.textColor)
                 ColorSelectorView(colors: textViewModel.colors, color: $textViewModel.dayoffColor)
@@ -48,7 +48,7 @@ struct FontEditorView: View {
                         }
                 }
             } else {
-                Spacer(minLength: 35)
+                Spacer(minLength: 34)
             }
         }
         .onChange(of: textViewModel.family, perform: { newValue in

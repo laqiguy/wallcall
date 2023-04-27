@@ -18,18 +18,21 @@ struct BusinessCalendar: Codable {
 // https://raw.githubusercontent.com/d10xa/holidays-calendar/master/json/consultant2023.json
 
 private class BusinessCalendarNetworkClient {
-    static let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
+    
+    private static var defalutFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY-MM-dd"
-        decoder.dateDecodingStrategy = .formatted(formatter)
+        return formatter
+    }
+    
+    static let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(defalutFormatter)
         return decoder
     }()
     static let encoder: JSONEncoder = {
         let encoder = JSONEncoder()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY-MM-dd"
-        encoder.dateEncodingStrategy = .formatted(formatter)
+        encoder.dateEncodingStrategy = .formatted(defalutFormatter)
         return encoder
     }()
     

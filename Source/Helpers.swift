@@ -22,7 +22,7 @@ func datesRange(from: Date, to: Date) -> [Date] {
     var array = [tempDate]
 
     while tempDate < to {
-        tempDate = Calendar.current.date(byAdding: .day, value: 1, to: tempDate)!
+        tempDate = calendar.date(byAdding: .day, value: 1, to: tempDate)!
         array.append(tempDate)
     }
 
@@ -32,9 +32,9 @@ func datesRange(from: Date, to: Date) -> [Date] {
 extension Date {
     func startOfMonth() -> Date {
         return calendar.date(
-            from: Calendar.current.dateComponents(
+            from: calendar.dateComponents(
                 [.year, .month],
-                from: Calendar.current.startOfDay(for: self)))!
+                from: calendar.startOfDay(for: self)))!
     }
     
     func endOfMonth() -> Date {
@@ -53,6 +53,7 @@ let calendar: Calendar = {
 
     return calendar
 }()
+
 let dateComponents: Set<Calendar.Component> = [.day, .month, .year, .weekday, .weekdayOrdinal, .weekOfYear]
 
 let monthFormatter: DateFormatter = {

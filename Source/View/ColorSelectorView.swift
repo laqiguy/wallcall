@@ -27,10 +27,10 @@ struct ColorSelectorView: View {
                 }) {
                     Circle()
                         .fill(color)
-                        .frame(width: 40, height: 40)
+                        .frame(width: 24, height: 24)
                         .overlay(
                             Circle()
-                                .stroke(getSelectionColor(for: color), lineWidth: 3)
+                                .stroke(getSelectionColor(for: color), lineWidth: 1)
                         )
                 }
             }
