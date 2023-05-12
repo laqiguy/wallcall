@@ -41,7 +41,7 @@ private class BusinessCalendarNetworkClient {
         let client = URLSessionClient(requestAdapter: requestAdapter, configuration: .default)
         return client
     }()
-
+    
     struct BusinessCalendarEndpoint: Endpoint, URLRequestBuildable {
         typealias Content = BusinessCalendar
         
@@ -69,13 +69,11 @@ class BusinessCalendarManager {
     
     func load(for date: Date) async {
         let year = calendar.component(.year, from: date)
-        if loadCalendar(for: year) == nil {
-            do {
-                let calendar = try await client.getCalendar(for: year)
-                businessCalendars[year] = calendar
-                save(calendar: calendar, for: year)
-            } catch {
-            }
+        do {
+            let calendar = try await client.getCalendar(for: year)
+            businessCalendars[year] = calendar
+            save(calendar: calendar, for: year)
+        } catch {
         }
     }
     

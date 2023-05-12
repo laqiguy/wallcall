@@ -147,6 +147,7 @@ struct MainView: View {
         .task {
             await viewModel.load()
         }
+        .persistentSystemOverlays(.hidden)
     }
 }
 

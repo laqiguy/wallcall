@@ -106,9 +106,13 @@ struct Month {
         businessCalendar: BusinessCalendar? = nil) -> [Day] {
         let currentMonth = calendar.component(.month, from: date)
         return array.map { element in
-            let weekDayNumber = calendar.component(.weekday, from: element)
-            let isDayOff = weekDayNumber == 1 || weekDayNumber == 7 ||
-            businessCalendar?.holidays.first(where: { $0.sameDay(as: element) }) != nil
+            let isDayOff: Bool
+            if let businessCalendar {
+                isDayOff = businessCalendar.holidays.first(where: { $0.sameDay(as: element) }) != nil
+            } else {
+                let weekDayNumber = calendar.component(.weekday, from: element)
+                isDayOff = weekDayNumber == 1 || weekDayNumber == 7
+            }
             return Day(
                 date: element,
                 isCurrentMonth: currentMonth == calendar.component(.month, from: element),
