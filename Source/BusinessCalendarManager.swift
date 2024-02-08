@@ -36,7 +36,7 @@ private class BusinessCalendarNetworkClient {
         return encoder
     }()
     
-    private let client: Client = {
+    private let client: ConcurrencyClient = {
         let requestAdapter = BaseRequestAdapter(baseURL: URL(string: "https://raw.githubusercontent.com/")!)
         let client = URLSessionClient(requestAdapter: requestAdapter, configuration: .default)
         return client

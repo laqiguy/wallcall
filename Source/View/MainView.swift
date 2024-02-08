@@ -72,7 +72,7 @@ struct MainView: View {
                     .resizable()
                     .scaledToFill()
                     .modifier(
-                        ImageZoomModifier(
+                        ImageModifier(
                             contentSize: CGSize(
                                 width: proxy.size.width,
                                 height: proxy.size.height)))

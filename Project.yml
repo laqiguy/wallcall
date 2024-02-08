@@ -1,0 +1,37 @@
+name: wallcall
+options:
+  minimumXcodeGenVersion: 2.38.0
+packages:
+  Apexy:
+    url: https://github.com/RedMadRobot/apexy-ios.git
+    from: 1.0.0
+targets:
+  main:
+    platform: iOS
+    type: application
+    sources:
+      - Source
+      - configs
+      - Makefile
+    configFiles:
+      Debug: configs/debug.xcconfig
+      Release: configs/release.xcconfig
+    dependencies:
+      - package: Apexy
+schemes:
+  debug:
+    build:
+      targets:
+        main: all
+    run:
+      config: Debug
+    archive:
+      config: Debug
+  release:
+    build:
+      targets:
+        main: all
+    run:
+      config: Release
+    archive:
+      config: Release
