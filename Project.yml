@@ -5,19 +5,23 @@ packages:
   Apexy:
     url: https://github.com/RedMadRobot/apexy-ios.git
     from: 1.0.0
+  InteractiveImageView:
+    url: https://github.com/vospennikov/InteractiveImageView.git
+    from: 1.1.0
 targets:
   main:
     platform: iOS
     type: application
     sources:
-      - Source
-      - configs
-      - Makefile
+    - Source
+    - configs
+    - Makefile
     configFiles:
       Debug: configs/debug.xcconfig
       Release: configs/release.xcconfig
     dependencies:
-      - package: Apexy
+    - package: Apexy
+    - package: InteractiveImageView
 schemes:
   debug:
     build:

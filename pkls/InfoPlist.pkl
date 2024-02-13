@@ -1,0 +1,15 @@
+CFBundleExecutable = "main"
+CFBundleIdentifier = "$(PRODUCT_BUNDLE_IDENTIFIER)"
+CFBundleShortVersionString = "$(CURRENT_PROJECT_VERSION)"
+CFBundleVersion = "$(MARKETING_VERSION)"
+UIAppFonts {
+    "CoFoRedmadrobot-Regular.otf"
+	"CoFoSans-Regular.ttf"
+}
+UILaunchScreen {
+
+}
+
+output {
+  renderer = new PListRenderer {}
+}

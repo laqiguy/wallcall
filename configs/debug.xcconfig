@@ -1,8 +1,4 @@
 #include "base.xcconfig"
 
-CODE_SIGN_STYLE=Manual
-DEVELOPMENT_TEAM=42LRQS6X44
-DEVELOPMENT_TEAM[sdk=iphoneos*]=42LRQS6X44
-PRODUCT_BUNDLE_IDENTIFIER=com.redmadrobot.wallcal
 PROVISIONING_PROFILE_SPECIFIER=WallCal Development
 CODE_SIGN_IDENTITY="Apple Development: Алексей Тюрнин (J5J9ZLZ39G)"
