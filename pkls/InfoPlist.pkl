@@ -9,6 +9,8 @@ UIAppFonts {
 UILaunchScreen {
 
 }
+CFBundleName = "wallcall"
+CFBundleDisplayName = "Wall Call"
 
 output {
   renderer = new PListRenderer {}

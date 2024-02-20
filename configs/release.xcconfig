@@ -1,4 +1,4 @@
 #include "base.xcconfig"
 
 PROVISIONING_PROFILE_SPECIFIER=WallCal Distribution
-CODE_SIGN_IDENTITY="iPhone Distribution: Redmadrobot OOO"
+CODE_SIGN_IDENTITY=iPhone Distribution: Redmadrobot OOO

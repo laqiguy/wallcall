@@ -17,5 +17,9 @@
   </array>
   <key>UILaunchScreen</key>
     <dict/>
+  <key>CFBundleName</key>
+  <string>wallcall</string>
+  <key>CFBundleDisplayName</key>
+  <string>Wall Call</string>
 </dict>
 </plist>
