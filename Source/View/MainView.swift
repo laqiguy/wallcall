@@ -5,12 +5,11 @@
 //  Created by Aleksei Tiurnin on 07.03.2023.
 //
 
-import InteractiveImageView
 import SwiftUI
 
 struct MainViewModel {
     var textViewModel: TextViewModel = TextViewModel()
-    var image: UIImage = UIImage(imageLiteralResourceName: "1")
+    var image: Image = Image("1")
     let current: Date
     var date: Date
     var month: Month
@@ -61,7 +60,6 @@ struct MainView: View {
     @State var isShowPhotoPicker: Bool = false
     @State var isShowFontPicker: Bool = false
     @State var isShowDatePicker: Bool = false
-    @State var tapLocation: CGPoint = .zero
     
     init() {
         self._viewModel = .init(initialValue: MainViewModel(date: Date()))
@@ -69,25 +67,10 @@ struct MainView: View {
     
     var body: some View {
         ZStack {
-//            GeometryReader { proxy in
-//                viewModel.image
-//                    .resizable()
-//                    .scaledToFill()
-//                    .modifier(
-//                        ImageModifier(
-//                            contentSize: CGSize(
-//                                width: proxy.size.width,
-//                                height: proxy.size.height)))
-//                    .blur(radius: viewModel.isBlurred ? 5 : 0)
-//                    .onTapGesture {
-//                        self.isShowPhotoPicker.toggle()
-//                    }
-//            }
-            InteractiveImage(image: viewModel.image, location: tapLocation)
-            .onTapGesture {
-                self.isShowPhotoPicker.toggle()
-            }
-//            .padding(EdgeInsets(top: -10, leading: -10, bottom: -10, trailing: -10))
+            ImageZoomDragView(image: $viewModel.image)
+                .onTapGesture {
+                    self.isShowPhotoPicker.toggle()
+                }
             VStack(alignment: .center, spacing: 4 * viewModel.textViewModel.scale) {
                 Text(viewModel.month.name)
                     .font(

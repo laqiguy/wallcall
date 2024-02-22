@@ -3,12 +3,10 @@ CFBundleIdentifier = "$(PRODUCT_BUNDLE_IDENTIFIER)"
 CFBundleShortVersionString = "$(CURRENT_PROJECT_VERSION)"
 CFBundleVersion = "$(MARKETING_VERSION)"
 UIAppFonts {
-    "CoFoRedmadrobot-Regular.otf"
+  "CoFoRedmadrobot-Regular.otf"
 	"CoFoSans-Regular.ttf"
 }
-UILaunchScreen {
-
-}
+UILaunchScreen { }
 CFBundleName = "wallcall"
 CFBundleDisplayName = "Wall Call"
 

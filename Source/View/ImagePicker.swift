@@ -12,14 +12,14 @@ struct ImagePicker: UIViewControllerRepresentable {
     @Environment(\.presentationMode)
     var presentationMode
 
-    @Binding var image: UIImage
+    @Binding var image: Image
 
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
         @Binding var presentationMode: PresentationMode
-        @Binding var image: UIImage
+        @Binding var image: Image
 
-        init(presentationMode: Binding<PresentationMode>, image: Binding<UIImage>) {
+        init(presentationMode: Binding<PresentationMode>, image: Binding<Image>) {
             _presentationMode = presentationMode
             _image = image
         }
@@ -27,7 +27,7 @@ struct ImagePicker: UIViewControllerRepresentable {
         func imagePickerController(_ picker: UIImagePickerController,
                                    didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             let uiImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-            image = uiImage//Image(uiImage: uiImage)
+            image = Image(uiImage: uiImage)
             presentationMode.dismiss()
 
         }
