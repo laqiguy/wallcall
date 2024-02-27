@@ -9,10 +9,6 @@ packages {
         url = "https://github.com/RedMadRobot/apexy-ios.git"
         from = "1.0.0"
     }
-    InteractiveImageView {
-        url = "https://github.com/vospennikov/InteractiveImageView.git"
-        from = "1.1.0"
-    }
 }
 
 targets {
@@ -32,9 +28,17 @@ targets {
             new {
                 package = "Apexy"
             }
-            new {
-                package = "InteractiveImageView"
-            }
+        }
+    }
+    tests {
+        platform = "iOS"
+        type = "bundle.unit-test"
+        sources { 
+            "Tests"
+        }
+        settings {
+            BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/main.app/main"
+            TEST_HOST = "$(BUNDLE_LOADER)"
         }
     }
 }
@@ -52,6 +56,12 @@ schemes {
         archive {
             config = "Debug"
         }
+        test {
+            config = "Debug"
+            targets {
+                "tests"
+            }
+        }
     }
     release {
         build {
@@ -65,7 +75,7 @@ schemes {
         archive {
             config = "Release"
         }
-    } 
+    }
 }
 
 output {

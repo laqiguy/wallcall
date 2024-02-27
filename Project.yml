@@ -5,9 +5,6 @@ packages:
   Apexy:
     url: https://github.com/RedMadRobot/apexy-ios.git
     from: 1.0.0
-  InteractiveImageView:
-    url: https://github.com/vospennikov/InteractiveImageView.git
-    from: 1.1.0
 targets:
   main:
     platform: iOS
@@ -21,7 +18,14 @@ targets:
       Release: configs/release.xcconfig
     dependencies:
     - package: Apexy
-    - package: InteractiveImageView
+  tests:
+    platform: iOS
+    type: bundle.unit-test
+    sources:
+    - Tests
+    settings:
+      BUNDLE_LOADER: $(BUILT_PRODUCTS_DIR)/main.app/main
+      TEST_HOST: $(BUNDLE_LOADER)
 schemes:
   debug:
     build:
@@ -31,6 +35,10 @@ schemes:
       config: Debug
     archive:
       config: Debug
+    test:
+      config: Debug
+      targets:
+      - tests
   release:
     build:
       targets:
